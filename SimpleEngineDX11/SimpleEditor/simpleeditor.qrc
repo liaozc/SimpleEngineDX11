@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/SimpleEditor">
+        <file>Resources/FileOpen.png</file>
+    </qresource>
+</RCC>
