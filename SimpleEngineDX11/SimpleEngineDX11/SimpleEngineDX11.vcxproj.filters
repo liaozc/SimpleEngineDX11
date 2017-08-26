@@ -4,6 +4,9 @@
     <Filter Include="Interace">
       <UniqueIdentifier>{4c9adaab-a9b0-4e37-8ebe-2006a5bc2e6d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="internal">
+      <UniqueIdentifier>{b529e5f9-a175-4a29-9ae5-b7e191904184}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine_public.h">
@@ -15,8 +18,31 @@
     <ClInclude Include="scene_public.h">
       <Filter>Interace</Filter>
     </ClInclude>
+    <ClInclude Include="factory_public.h">
+      <Filter>Interace</Filter>
+    </ClInclude>
+    <ClInclude Include="renderTarget_public.h">
+      <Filter>Interace</Filter>
+    </ClInclude>
+    <ClInclude Include="engine_imp.h">
+      <Filter>internal</Filter>
+    </ClInclude>
+    <ClInclude Include="renderTarget_window32.h">
+      <Filter>internal</Filter>
+    </ClInclude>
+    <ClInclude Include="stl_containers.h">
+      <Filter>Interace</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="engine_imp.cpp">
+      <Filter>internal</Filter>
+    </ClCompile>
+    <ClCompile Include="renderTarget_window32.cpp">
+      <Filter>internal</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -26,11 +26,10 @@ QT_BEGIN_NAMESPACE
 class Ui_SimpleEditorClass
 {
 public:
-    QAction *actionOpenScene;
     QWidget *centralWidget;
     QMenuBar *menuBar;
-    QMenu *NewScene;
-    QMenu *OpenScene;
+    QMenu *menu;
+    QMenu *menu_2;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -39,21 +38,16 @@ public:
         if (SimpleEditorClass->objectName().isEmpty())
             SimpleEditorClass->setObjectName(QStringLiteral("SimpleEditorClass"));
         SimpleEditorClass->resize(600, 400);
-        actionOpenScene = new QAction(SimpleEditorClass);
-        actionOpenScene->setObjectName(QStringLiteral("actionOpenScene"));
-        QIcon icon;
-        icon.addFile(QStringLiteral(":/SimpleEditor/Resources/FileOpen.png"), QSize(), QIcon::Normal, QIcon::Off);
-        actionOpenScene->setIcon(icon);
         centralWidget = new QWidget(SimpleEditorClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         SimpleEditorClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(SimpleEditorClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 600, 23));
-        NewScene = new QMenu(menuBar);
-        NewScene->setObjectName(QStringLiteral("NewScene"));
-        OpenScene = new QMenu(menuBar);
-        OpenScene->setObjectName(QStringLiteral("OpenScene"));
+        menu = new QMenu(menuBar);
+        menu->setObjectName(QStringLiteral("menu"));
+        menu_2 = new QMenu(menuBar);
+        menu_2->setObjectName(QStringLiteral("menu_2"));
         SimpleEditorClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(SimpleEditorClass);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -63,10 +57,8 @@ public:
         statusBar->setObjectName(QStringLiteral("statusBar"));
         SimpleEditorClass->setStatusBar(statusBar);
 
-        menuBar->addAction(NewScene->menuAction());
-        menuBar->addAction(OpenScene->menuAction());
-        mainToolBar->addSeparator();
-        mainToolBar->addAction(actionOpenScene);
+        menuBar->addAction(menu->menuAction());
+        menuBar->addAction(menu_2->menuAction());
 
         retranslateUi(SimpleEditorClass);
 
@@ -76,12 +68,8 @@ public:
     void retranslateUi(QMainWindow *SimpleEditorClass)
     {
         SimpleEditorClass->setWindowTitle(QApplication::translate("SimpleEditorClass", "SimpleEditor", Q_NULLPTR));
-        actionOpenScene->setText(QApplication::translate("SimpleEditorClass", "OpenScene", Q_NULLPTR));
-#ifndef QT_NO_TOOLTIP
-        actionOpenScene->setToolTip(QApplication::translate("SimpleEditorClass", "\346\211\223\345\274\200\345\234\272\346\231\257", Q_NULLPTR));
-#endif // QT_NO_TOOLTIP
-        NewScene->setTitle(QApplication::translate("SimpleEditorClass", "\346\226\260\345\273\272", Q_NULLPTR));
-        OpenScene->setTitle(QApplication::translate("SimpleEditorClass", "\346\211\223\345\274\200", Q_NULLPTR));
+        menu->setTitle(QApplication::translate("SimpleEditorClass", "\346\226\260\345\273\272", Q_NULLPTR));
+        menu_2->setTitle(QApplication::translate("SimpleEditorClass", "\346\211\223\345\274\200", Q_NULLPTR));
     } // retranslateUi
 
 };
