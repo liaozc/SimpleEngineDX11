@@ -19,21 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="engine_imp.h" />
-    <ClInclude Include="engine_public.h" />
-    <ClInclude Include="factory_public.h" />
-    <ClInclude Include="scene_public.h" />
-    <ClInclude Include="platform.h" />
-    <ClInclude Include="renderTarget_window32.h" />
-    <ClInclude Include="renderTarget_public.h" />
-    <ClInclude Include="stl_containers.h" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\..\README.md" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="engine_imp.cpp" />
-    <ClCompile Include="renderTarget_window32.cpp" />
+    <ClCompile Include="renderer_public.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{E7601EC4-1C52-4633-B191-EC56DC909013}</ProjectGuid>

@@ -1,26 +1,38 @@
-#include "renderTarget_window32.h"
+#include "render_target_win32.h"
 #include "engine_public.h"
 #include <d3d11.h>
 
-void RTWindow::init(iEngine * pEngine)
+
+extern "C" 
+iRenderTarget* CreateRTWindow(iEngine* pEngine, wndHandle hwnd)
+{
+	RTWindow* pRTWnd = new RTWindow();
+	pRTWnd->Init(pEngine);
+	pRTWnd->BindWndHandle(hwnd);
+	return pRTWnd;
+}
+
+
+void RTWindow::Init(iEngine * pEngine)
 {
 	m_pEngine = pEngine;
 }
 
-void RTWindow::doRender()
+void RTWindow::OnAttached()
 {
-	if (!m_pEngine)
-		return;
-
 }
 
-void RTWindow::bindWndHandle(wndHandle hwnd)
+void RTWindow::OnDetached()
+{
+}
+
+void RTWindow::BindWndHandle(wndHandle hwnd)
 {
 	if (m_hwnd != wndHandle(0)) return;
 	m_hwnd = hwnd;
 	if (!m_pEngine) return;
 	//create swapchain here
-	ID3D11Device* pD3DDevice = m_pEngine->getDevice();
+	ID3D11Device* pD3DDevice = m_pEngine->GetDevice();
 	if (!pD3DDevice) return;
 	IDXGIFactory1 *dxgiFactory;
 	if (FAILED(CreateDXGIFactory1(__uuidof(IDXGIFactory1), (void **)&dxgiFactory))) return;
@@ -65,7 +77,7 @@ void RTWindow::bindWndHandle(wndHandle hwnd)
 	sd.SampleDesc.Count = msaaSamples;
 	sd.SampleDesc.Quality = 0;
 	if (FAILED(dxgiFactory->CreateSwapChain(pD3DDevice, &sd, &m_pSwapChain))) return;
-	dxgiFactory->MakeWindowAssociation(hwnd, DXGI_MWA_NO_WINDOW_CHANGES | DXGI_MWA_NO_ALT_ENTER);// We'll handle Alt-Enter ourselves thank you very much ...
+	dxgiFactory->MakeWindowAssociation(hwnd, DXGI_MWA_NO_WINDOW_CHANGES | DXGI_MWA_NO_ALT_ENTER);
 	dxgiOutput->Release();
 	dxgiAdapter->Release();
 	dxgiFactory->Release();

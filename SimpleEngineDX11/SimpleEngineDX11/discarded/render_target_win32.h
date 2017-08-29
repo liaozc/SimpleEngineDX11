@@ -1,4 +1,4 @@
-#include "renderTarget_public.h"
+#include "render_target_public.h"
 #include "platform.h"
 
 #include <dxgi.h>
@@ -6,9 +6,10 @@
 class RTWindow : public iRenderTarget
 {
 public:
-	virtual void init(iEngine* pEngine);
-	virtual void doRender();
-	virtual void bindWndHandle(wndHandle hwnd);
+	virtual void Init(iEngine* pEngine) ;
+	virtual void OnAttached() ;
+	virtual void OnDetached() ;
+	virtual void BindWndHandle(wndHandle hwnd);
 protected:
 	iEngine* m_pEngine;
 	wndHandle m_hwnd;

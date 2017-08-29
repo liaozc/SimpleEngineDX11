@@ -7,6 +7,7 @@
 #define wndHandle HWND
 #define wndDC	HDC
 
+#include <string>
 
 #endif
 
