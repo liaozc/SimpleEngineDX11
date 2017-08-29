@@ -12,8 +12,60 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="renderer_public.h">
+    <ClInclude Include="platform.h" />
+    <ClInclude Include="rs_renderer_public.h">
       <Filter>render_system</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_buffer_public.h">
+      <Filter>render_system</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_texture_public.h">
+      <Filter>render_system</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_shader_public.h">
+      <Filter>render_system</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_renderer_dx11.h">
+      <Filter>render_system\dx11</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_buffer_dx11.h">
+      <Filter>render_system\dx11</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_texture_dx11.h">
+      <Filter>render_system\dx11</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_shader_dx11.h">
+      <Filter>render_system\dx11</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_window_public.h">
+      <Filter>render_system</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_window_dx11.h">
+      <Filter>render_system\dx11</Filter>
+    </ClInclude>
+    <ClInclude Include="engine_public.h" />
+    <ClInclude Include="rs_rt_public.h">
+      <Filter>render_system</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_rt_dx11.h">
+      <Filter>render_system\dx11</Filter>
+    </ClInclude>
+    <ClInclude Include="color.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="rs_renderer_dx11.cpp">
+      <Filter>render_system\dx11</Filter>
+    </ClCompile>
+    <ClCompile Include="rs_buffer_dx11.cpp">
+      <Filter>render_system\dx11</Filter>
+    </ClCompile>
+    <ClCompile Include="rs_window_dx11.cpp">
+      <Filter>render_system\dx11</Filter>
+    </ClCompile>
+    <ClCompile Include="engine.h" />
+    <ClCompile Include="engine.cpp" />
+    <ClCompile Include="rs_rt_dx11.cpp">
+      <Filter>render_system\dx11</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -22,7 +22,29 @@
     <None Include="..\..\README.md" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="renderer_public.h" />
+    <ClCompile Include="engine.cpp" />
+    <ClCompile Include="engine.h" />
+    <ClCompile Include="rs_buffer_dx11.cpp" />
+    <ClCompile Include="rs_renderer_dx11.cpp" />
+    <ClCompile Include="rs_rt_dx11.cpp" />
+    <ClCompile Include="rs_window_dx11.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="color.h" />
+    <ClInclude Include="engine_public.h" />
+    <ClInclude Include="platform.h" />
+    <ClInclude Include="rs_renderer_dx11.h" />
+    <ClInclude Include="rs_rt_dx11.h" />
+    <ClInclude Include="rs_rt_public.h" />
+    <ClInclude Include="rs_shader_dx11.h" />
+    <ClInclude Include="rs_shader_public.h" />
+    <ClInclude Include="rs_texture_dx11.h" />
+    <ClInclude Include="rs_texture_public.h" />
+    <ClInclude Include="rs_buffer_dx11.h" />
+    <ClInclude Include="rs_buffer_public.h" />
+    <ClInclude Include="rs_renderer_public.h" />
+    <ClInclude Include="rs_window_dx11.h" />
+    <ClInclude Include="rs_window_public.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{E7601EC4-1C52-4633-B191-EC56DC909013}</ProjectGuid>
@@ -45,7 +67,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -106,12 +128,13 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;BUILD_ENGINE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>dxgi.lib;d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

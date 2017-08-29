@@ -6,8 +6,14 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleEngineDX11", "SimpleEngineDX11\SimpleEngineDX11.vcxproj", "{E7601EC4-1C52-4633-B191-EC56DC909013}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleEditor", "SimpleEditor\SimpleEditor.vcxproj", "{B12702AD-ABFB-343A-A199-8E24837244A3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E7601EC4-1C52-4633-B191-EC56DC909013} = {E7601EC4-1C52-4633-B191-EC56DC909013}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleClient", "SimpleClient\SimpleClient.vcxproj", "{55035B3C-FA4F-4536-8C0F-A09CB06E405E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E7601EC4-1C52-4633-B191-EC56DC909013} = {E7601EC4-1C52-4633-B191-EC56DC909013}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
