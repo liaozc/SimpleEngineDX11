@@ -50,9 +50,9 @@ iRS_Texture * RS_RendererDX11::CreateTexture2DFromeFile(LPCSTR pFilePath)
 	return nullptr;
 }
 
-iRS_Buffer * RS_RendererDX11::CreateVertBuffer(int size, void * data, eVertDataFormat * pDataForm, int formSize)
+iRS_Buffer * RS_RendererDX11::CreateVertBuffer(eRS_BufferType bufferType, int size, void * data)
 {
-	return nullptr;
+	RS_BufferDX11* pBuffer = new RS_BufferDX11(bufferType, size, this);
 }
 
 iRS_Buffer * RS_RendererDX11::CreateIndexBuffer(int size, void * data)

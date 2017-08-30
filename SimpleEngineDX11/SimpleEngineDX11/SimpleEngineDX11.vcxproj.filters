@@ -2,6 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <None Include="..\..\README.md" />
+    <None Include="..\..\TODO.md" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="render_system">
@@ -9,6 +10,12 @@
     </Filter>
     <Filter Include="render_system\dx11">
       <UniqueIdentifier>{a43b1fdc-8085-4ca8-b3a5-be29b26b2161}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="math">
+      <UniqueIdentifier>{bf218203-4e30-4901-8bb7-674f35cb003e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geometry">
+      <UniqueIdentifier>{5a2bee01-13e3-4634-9a79-b511eb94f01b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -44,13 +51,44 @@
       <Filter>render_system\dx11</Filter>
     </ClInclude>
     <ClInclude Include="engine_public.h" />
-    <ClInclude Include="rs_rt_public.h">
+    <ClInclude Include="color.h" />
+    <ClInclude Include="rs_mesh_public.h">
       <Filter>render_system</Filter>
     </ClInclude>
-    <ClInclude Include="rs_rt_dx11.h">
+    <ClInclude Include="scene_public.h" />
+    <ClInclude Include="sceneobject_public.h" />
+    <ClInclude Include="rs_rendertarget_public.h">
+      <Filter>render_system</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_rendertarget_dx11.h">
       <Filter>render_system\dx11</Filter>
     </ClInclude>
-    <ClInclude Include="color.h" />
+    <ClInclude Include="transform.h" />
+    <ClInclude Include="mth_math.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="mth_vector.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="mth_quaternion.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="mth_matrix.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="geo_mesh.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_meshrenderer_public.h">
+      <Filter>render_system</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_dataType.h">
+      <Filter>render_system</Filter>
+    </ClInclude>
+    <ClInclude Include="stl_containers.h" />
+    <ClInclude Include="rs_material_public.h">
+      <Filter>render_system</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="rs_renderer_dx11.cpp">
@@ -64,8 +102,12 @@
     </ClCompile>
     <ClCompile Include="engine.h" />
     <ClCompile Include="engine.cpp" />
-    <ClCompile Include="rs_rt_dx11.cpp">
+    <ClCompile Include="rs_rendertarget_dx11.cpp">
       <Filter>render_system\dx11</Filter>
+    </ClCompile>
+    <ClCompile Include="transform.cpp" />
+    <ClCompile Include="geo_mesh.cpp">
+      <Filter>geometry</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -2,7 +2,7 @@
 #define RS_RT_DX11_H
 
 #include <d3d11.h>
-#include "rs_rt_public.h"
+#include "rs_rendertarget_public.h"
 
 class RS_RenderTargetDX11 :public iRS_RenderTarget
 {

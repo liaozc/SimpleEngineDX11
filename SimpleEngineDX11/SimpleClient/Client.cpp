@@ -98,6 +98,7 @@ HWND CreateOuputWindow(int width, int height)
 	HWND hwnd = CreateWindowExA(0, "client","client",WS_VISIBLE | WS_OVERLAPPEDWINDOW,0,0, width, height,NULL,NULL,NULL,NULL);
 	
 	UpdateWindow(hwnd);
+	ShowWindow(hwnd,TRUE);
 
 	return hwnd;
 }
@@ -120,7 +121,7 @@ int main()
 		return 0; 
 	}
 
-	HWND hwnd = CreateOuputWindow(600, 480);
+	HWND hwnd = CreateOuputWindow(640, 480);
 
 	iRS_Renderer* pRenderer = g_pEngine->GetRenderer();
 	g_pWnd = pRenderer->CreateWindowFromHandle(hwnd);

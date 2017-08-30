@@ -14,7 +14,7 @@ public:
 public:
 	virtual iRS_Texture*	CreateTexture2D(int width, int height, eTextureDataFormat format, void* data);
 	virtual iRS_Texture*	CreateTexture2DFromeFile(LPCSTR pFilePath);
-	virtual iRS_Buffer*		CreateVertBuffer(int size, void* data, eVertDataFormat* pDataForm, int formSize);
+	virtual iRS_Buffer*		CreateVertBuffer(eRS_BufferType bufferType,int size, void* data = nullptr);
 	virtual iRS_Buffer*		CreateIndexBuffer(int size, void* data);
 	virtual iRS_Shader*		CreateVShaderFromFile(LPCSTR pFilePath);
 	virtual iRS_Shader*		CreateVShaderFromMemory(byte* pMemory);

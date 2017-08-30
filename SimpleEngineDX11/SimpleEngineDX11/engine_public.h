@@ -2,7 +2,7 @@
 #define ENGINE_PUBLIC_H
 
 #include "rs_renderer_public.h"
-#include <map>
+#include "stl_containers.h"
 #include <string>
 
 class iEngine;
