@@ -3,9 +3,10 @@
 
 enum eRS_BufferType
 {
-	eRSBT_Vertex,
-	eRSBT_Index,
-	eRSBT_Count,
+	eRS_BufferType_Vertex,
+	eRS_BufferType_Index,
+	eRS_BufferType_Constant,
+	eRS_BufferType_Count,
 };
 
 class iRS_Buffer

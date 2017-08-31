@@ -9,7 +9,7 @@
 #include "rs_window_public.h"
 #include "rs_rendertarget_public.h"
 #include "color.h"
-#include "rs_dataType.h"
+#include "data_type.h"
 
 class iRS_Window;
 
@@ -19,7 +19,7 @@ public:
 	virtual HRESULT		Init() = 0;
 	virtual void		UnInit() = 0;
 public:
-	virtual iRS_Texture*	CreateTexture2D(int width, int height, eTextureDataFormat format,void* data) = 0;
+	virtual iRS_Texture*	CreateTexture2D(int width, int height, eRS_ResourceFormat format,void* data) = 0;
 	virtual iRS_Texture*	CreateTexture2DFromeFile(LPCSTR pFilePath) = 0;
 	virtual iRS_Buffer*		CreateVertBuffer(eRS_BufferType bufferType,int size, void* data = nullptr) = 0;
 	virtual iRS_Buffer*		CreateIndexBuffer(int size, void* data) = 0;

@@ -1,6 +1,6 @@
 #include "rs_window_dx11.h"
 #include "rs_renderer_dx11.h"
-#include "rs_rt_dx11.h"
+#include "rs_rendertarget_dx11.h"
 
 HRESULT RS_WindowDX11::Init(HWND hwnd, iRS_Renderer* pRenderer)
 {
@@ -103,9 +103,7 @@ void RS_WindowDX11::OnSize(HWND hwnd, unsigned w, unsigned h)
 		m_pSwapChain->ResizeBuffers(2, m_nWidth, m_nHeight, DXGI_FORMAT_R8G8B8A8_UNORM, 0);
 
 	createRT();
-	
 }
-
 
 void RS_WindowDX11::Present()
 {

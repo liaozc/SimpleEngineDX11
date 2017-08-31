@@ -27,13 +27,20 @@
     <ClCompile Include="engine.h" />
     <ClCompile Include="geo_mesh.cpp" />
     <ClCompile Include="rs_buffer_dx11.cpp" />
+    <ClCompile Include="rs_material_dx11.cpp" />
     <ClCompile Include="rs_renderer_dx11.cpp" />
     <ClCompile Include="rs_rendertarget_dx11.cpp" />
+    <ClCompile Include="rs_shader_dx11.cpp" />
+    <ClCompile Include="rs_state_blend_dx11.cpp" />
+    <ClCompile Include="rs_state_depth_dx11.cpp" />
+    <ClCompile Include="rs_state_rasterizer_dx11.cpp" />
+    <ClCompile Include="rs_state_sampler_dx11.cpp" />
     <ClCompile Include="rs_window_dx11.cpp" />
     <ClCompile Include="transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="color.h" />
+    <ClInclude Include="data_type.h" />
     <ClInclude Include="engine_public.h" />
     <ClInclude Include="geo_mesh.h" />
     <ClInclude Include="mth_math.h" />
@@ -41,13 +48,22 @@
     <ClInclude Include="mth_quaternion.h" />
     <ClInclude Include="mth_vector.h" />
     <ClInclude Include="platform.h" />
-    <ClInclude Include="rs_dataType.h" />
+    <ClInclude Include="rs_material_dx11.h" />
     <ClInclude Include="rs_material_public.h" />
     <ClInclude Include="rs_meshrenderer_public.h" />
     <ClInclude Include="rs_mesh_public.h" />
     <ClInclude Include="rs_renderer_dx11.h" />
     <ClInclude Include="rs_rendertarget_dx11.h" />
     <ClInclude Include="rs_rendertarget_public.h" />
+    <ClInclude Include="rs_state_blend_dx11.h" />
+    <ClInclude Include="rs_state_blend_public.h" />
+    <ClInclude Include="rs_state_depth_dx11.h" />
+    <ClInclude Include="rs_state_depth_public.h" />
+    <ClInclude Include="rs_state_public.h" />
+    <ClInclude Include="rs_state_rasterizer_dx11.h" />
+    <ClInclude Include="rs_state_rasterizer_public.h" />
+    <ClInclude Include="rs_state_sampler_dx11.h" />
+    <ClInclude Include="rs_state_sampler_public.h" />
     <ClInclude Include="sceneobject_public.h" />
     <ClInclude Include="scene_public.h" />
     <ClInclude Include="rs_shader_dx11.h" />

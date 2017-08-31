@@ -82,12 +82,40 @@
     <ClInclude Include="rs_meshrenderer_public.h">
       <Filter>render_system</Filter>
     </ClInclude>
-    <ClInclude Include="rs_dataType.h">
-      <Filter>render_system</Filter>
-    </ClInclude>
     <ClInclude Include="stl_containers.h" />
     <ClInclude Include="rs_material_public.h">
       <Filter>render_system</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_state_public.h">
+      <Filter>render_system</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_state_blend_public.h">
+      <Filter>render_system</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_state_depth_public.h">
+      <Filter>render_system</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_state_rasterizer_public.h">
+      <Filter>render_system</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_state_blend_dx11.h">
+      <Filter>render_system\dx11</Filter>
+    </ClInclude>
+    <ClInclude Include="data_type.h" />
+    <ClInclude Include="rs_state_depth_dx11.h">
+      <Filter>render_system\dx11</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_state_rasterizer_dx11.h">
+      <Filter>render_system\dx11</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_state_sampler_public.h">
+      <Filter>render_system</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_state_sampler_dx11.h">
+      <Filter>render_system\dx11</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_material_dx11.h">
+      <Filter>render_system\dx11</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -108,6 +136,24 @@
     <ClCompile Include="transform.cpp" />
     <ClCompile Include="geo_mesh.cpp">
       <Filter>geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="rs_state_blend_dx11.cpp">
+      <Filter>render_system\dx11</Filter>
+    </ClCompile>
+    <ClCompile Include="rs_state_depth_dx11.cpp">
+      <Filter>render_system\dx11</Filter>
+    </ClCompile>
+    <ClCompile Include="rs_state_rasterizer_dx11.cpp">
+      <Filter>render_system\dx11</Filter>
+    </ClCompile>
+    <ClCompile Include="rs_state_sampler_dx11.cpp">
+      <Filter>render_system\dx11</Filter>
+    </ClCompile>
+    <ClCompile Include="rs_material_dx11.cpp">
+      <Filter>render_system\dx11</Filter>
+    </ClCompile>
+    <ClCompile Include="rs_shader_dx11.cpp">
+      <Filter>render_system\dx11</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

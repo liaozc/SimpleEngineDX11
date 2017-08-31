@@ -76,9 +76,9 @@ D3D11_BIND_FLAG RS_BufferDX11::getFlag() const
 {
 	switch (m_eType)
 	{
-	case eRSBT_Vertex:
+	case eRS_BufferType_Vertex:
 		return D3D11_BIND_VERTEX_BUFFER;
-	case eRSBT_Index:
+	case eRS_BufferType_Index:
 		return D3D11_BIND_INDEX_BUFFER;
 	}
 

@@ -40,7 +40,7 @@ void RS_RendererDX11::UnInit()
 
 }
 
-iRS_Texture * RS_RendererDX11::CreateTexture2D(int width, int height, eTextureDataFormat format, void * data)
+iRS_Texture * RS_RendererDX11::CreateTexture2D(int width, int height, eRS_ResourceFormat format, void * data)
 {
 	return nullptr;
 }
@@ -122,4 +122,9 @@ void RS_RendererDX11::ClearRenderTarget(iRS_RenderTarget * pRT, const Color & co
 	}
 }
 
-
+RS_RendererDX11 * Cast2RendererDX11(iRS_Renderer * pRenderer)
+{
+	if (!pRenderer) return  nullptr;
+	RS_RendererDX11* pRendererDX11 = dynamic_cast<RS_RendererDX11*>(pRenderer);
+	return pRendererDX11;
+}

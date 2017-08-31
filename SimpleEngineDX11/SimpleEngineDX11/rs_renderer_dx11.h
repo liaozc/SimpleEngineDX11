@@ -12,7 +12,7 @@ public:
 	virtual void	UnInit();
 
 public:
-	virtual iRS_Texture*	CreateTexture2D(int width, int height, eTextureDataFormat format, void* data);
+	virtual iRS_Texture*	CreateTexture2D(int width, int height, eRS_ResourceFormat format, void* data);
 	virtual iRS_Texture*	CreateTexture2DFromeFile(LPCSTR pFilePath);
 	virtual iRS_Buffer*		CreateVertBuffer(eRS_BufferType bufferType,int size, void* data = nullptr);
 	virtual iRS_Buffer*		CreateIndexBuffer(int size, void* data);
@@ -29,8 +29,8 @@ public:
 protected:
 	ID3D11Device* m_pDevice;
 	ID3D11DeviceContext* m_pContext;
-
 };
 
+RS_RendererDX11* Cast2RendererDX11(iRS_Renderer* pRenderer);
 
 #endif

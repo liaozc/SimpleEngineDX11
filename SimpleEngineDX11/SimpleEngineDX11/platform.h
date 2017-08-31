@@ -11,10 +11,6 @@ typedef HDC		HDC;
 typedef   signed __int64  int64;
 typedef unsigned __int64 uint64;
 
-typedef LPCSTR  LPCSTR;
-typedef byte	byte;
-typedef HRESULT HRESULT;
-
 #endif
 
 

@@ -136,6 +136,39 @@ int main()
 			DispatchMessage(&msg);
 		}
 		pRenderer->ClearRenderTarget(g_pWnd->GetRenderTarget());
+		/*
+		[
+			iMesh pMesh = new Mesh();
+			iMesheRenderer pMeshRenderer = new MeshRenderer();
+			iMaterial pMaterial = new Material();
+			pMeshRenderer->SetMesh(pMesh);
+			pMeshrRenderer->setMaterial(pMaterial);
+			pMaterial -> setBlendState( new BlendState());
+			pMaterial -> setRasterizerState( new RasterizerState() );
+			pMaterial -> setDepthState( new DepthState() );
+			iShader pVS = new Shader(VERT_SHADER)
+			iShader pFS = new Shader(FRAG_SHADER)
+			pMaterial -> setVShader( pVS);
+			pMaterial -> setPShader( pFS);
+			iSceneObject pSceneObj = new SceneObject();
+			pSceneObj->SetMeshRenderer(pMeshRenderer);
+			pScene->AddObj(pSceneObj);
+			pScene->DoRender(pRenderer);
+			[
+				for(obj in objs)
+					obj->GetMeshRenderer()->DoRender(pRenderer);
+					[
+						T = GetTransform();
+						pMaterial->GetVShader()->SetShaderConstant(T)
+						pMaterial->Apply(pRenderer);
+						pContext->setVB(VB)
+						pContext->setIB(IB)
+						pContext->Draw();
+					]
+			]
+		]
+		*/
+
 		g_pWnd->Present();
 		Sleep(5);
 	}
