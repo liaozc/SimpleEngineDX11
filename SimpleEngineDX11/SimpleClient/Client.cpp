@@ -6,6 +6,7 @@ bool bIsRunning = true;
 iEngine* g_pEngine = nullptr;
 iRS_Window* g_pWnd = nullptr;
 
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message) {
@@ -127,6 +128,11 @@ int main()
 	g_pWnd = pRenderer->CreateWindowFromHandle(hwnd);
 	iRS_RenderTarget* pMainRT = g_pWnd->GetRenderTarget();
 	pRenderer->SetRenderTarget(pMainRT);
+
+	LPCSTR tsVShader = "E:\\SimpleEngineDX11\\SimpleEngineDX11\\x64\\Debug\\ShaderTest.shd";
+	int uSize = 0;
+	iRS_Shader** pShaders = pRenderer->CreateShaderFromFile(tsVShader, uSize);
+
 	while (bIsRunning){
 		MSG msg;
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)){

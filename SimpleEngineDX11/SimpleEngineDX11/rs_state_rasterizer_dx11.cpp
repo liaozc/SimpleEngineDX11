@@ -69,8 +69,8 @@ HRESULT RS_RasterizerStateDX11::DoState(iRS_Renderer * pRenderer)
 		}
 		m_bDirty = false;
 		D3D11_RASTERIZER_DESC descRasterizer;
-		descRasterizer.FillMode = cast2D3dFillMode(m_eFillModel);
-		descRasterizer.CullMode = cast2D3dCullMode(m_eCullType);
+		descRasterizer.FillMode = cast2D3DFillMode(m_eFillModel);
+		descRasterizer.CullMode = cast2D3DCullMode(m_eCullType);
 		descRasterizer.FrontCounterClockwise = true;
 		descRasterizer.DepthBias = (INT)m_fDepthBais;
 		descRasterizer.DepthBiasClamp = 0;

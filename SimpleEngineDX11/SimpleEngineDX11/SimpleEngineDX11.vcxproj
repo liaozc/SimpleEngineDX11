@@ -31,6 +31,7 @@
     <ClCompile Include="rs_renderer_dx11.cpp" />
     <ClCompile Include="rs_rendertarget_dx11.cpp" />
     <ClCompile Include="rs_shader_dx11.cpp" />
+    <ClCompile Include="rs_shader_manager.cpp" />
     <ClCompile Include="rs_state_blend_dx11.cpp" />
     <ClCompile Include="rs_state_depth_dx11.cpp" />
     <ClCompile Include="rs_state_rasterizer_dx11.cpp" />
@@ -51,10 +52,10 @@
     <ClInclude Include="rs_material_dx11.h" />
     <ClInclude Include="rs_material_public.h" />
     <ClInclude Include="rs_meshrenderer_public.h" />
-    <ClInclude Include="rs_mesh_public.h" />
     <ClInclude Include="rs_renderer_dx11.h" />
     <ClInclude Include="rs_rendertarget_dx11.h" />
     <ClInclude Include="rs_rendertarget_public.h" />
+    <ClInclude Include="rs_shader_manager.h" />
     <ClInclude Include="rs_state_blend_dx11.h" />
     <ClInclude Include="rs_state_blend_public.h" />
     <ClInclude Include="rs_state_depth_dx11.h" />
@@ -160,13 +161,13 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;BUILD_ENGINE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;BUILD_ENGINE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>dxgi.lib;d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dxgi.lib;d3d11.lib;d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

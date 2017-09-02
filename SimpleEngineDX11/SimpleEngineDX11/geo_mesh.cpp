@@ -1,11 +1,9 @@
 #include "geo_mesh.h"
 
-Mesh::Mesh(Vector3 * pVerts, int nVertSize, void * pInds, byte indexType, int nIndexSize)
-	:m_pVerts(pVerts),m_nVertSize(nVertSize),m_nIndexSize(nIndexSize)
+
+Mesh::Mesh(void * pVertData, int nVertSize, UINT16 nVertStride, void * pInds, int nIndexSize, UINT16 nIndexStride, eRS_VertDataFormat* pFormat, UINT16 nFormatSize)
+	: m_pVertData(pVertData), m_nVertSize(nVertSize), m_nVStride(nVertStride),
+	m_pIndexData(pInds), m_nIndexSize(nIndexSize), m_nIStride(nIndexStride),
+	m_pFormat(pFormat), m_nFormatSize(nFormatSize)
 {
-	 if(indexType == 1)
-		m_pInds_i = (int*)pInds;
-	 else
-		 m_pInds_s = (short*)pInds;
-	 m_cIndexType = indexType;
 }

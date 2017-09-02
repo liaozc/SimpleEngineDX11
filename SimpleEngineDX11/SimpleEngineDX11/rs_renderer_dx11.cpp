@@ -3,12 +3,14 @@
 #include "rs_shader_dx11.h"
 #include "rs_texture_dx11.h"
 #include "rs_window_dx11.h"
-#include "rs_rt_dx11.h"
+#include "rs_rendertarget_dx11.h"
+#include "rs_shader_manager.h"
 
 HRESULT RS_RendererDX11::Init()
 {
 	m_pDevice = nullptr;
 	m_pContext = nullptr;
+	m_pShaderMgr = nullptr;
 	D3D_FEATURE_LEVEL featureLevels[] = 
 	{
 		D3D_FEATURE_LEVEL_11_1,
@@ -20,6 +22,10 @@ HRESULT RS_RendererDX11::Init()
 		printf("init Renderer fails \n");
 		return E_FAIL;
 	}
+
+	//create shader manager
+	m_pShaderMgr = new RS_ShaderManagerDX11(this);
+	
 	return S_OK;
 
 }
@@ -38,6 +44,12 @@ void RS_RendererDX11::UnInit()
 		m_pDevice = nullptr;
 	}
 
+	if (m_pShaderMgr) {
+		m_pShaderMgr->UnInit();
+		delete m_pShaderMgr;
+		m_pShaderMgr = nullptr;
+	}
+
 }
 
 iRS_Texture * RS_RendererDX11::CreateTexture2D(int width, int height, eRS_ResourceFormat format, void * data)
@@ -52,22 +64,36 @@ iRS_Texture * RS_RendererDX11::CreateTexture2DFromeFile(LPCSTR pFilePath)
 
 iRS_Buffer * RS_RendererDX11::CreateVertBuffer(eRS_BufferType bufferType, int size, void * data)
 {
-	RS_BufferDX11* pBuffer = new RS_BufferDX11(bufferType, size, this);
+	//RS_BufferDX11* pBuffer = new RS_BufferDX11(bufferType, size, this);
+	return nullptr;
 }
 
 iRS_Buffer * RS_RendererDX11::CreateIndexBuffer(int size, void * data)
 {
+	//RS_BufferDX11* pBuffer
 	return nullptr;
 }
 
-iRS_Shader * RS_RendererDX11::CreateVShaderFromFile(LPCSTR pFilePath)
+iRS_Shader** RS_RendererDX11::CreateShaderFromFile(LPCSTR pFilePath, int& uSize)
 {
-	return nullptr;
+	if (!m_pShaderMgr){
+		uSize = 0;
+		return nullptr;
+	}
+	iRS_Shader** pShaders = nullptr;
+	m_pShaderMgr->CreateShadersFromFile(pFilePath, pShaders, uSize);
+	return pShaders;
 }
 
-iRS_Shader * RS_RendererDX11::CreateVShaderFromMemory(byte * pMemory)
+iRS_Shader** RS_RendererDX11::CreateShaderFromMemry(char* const pMemory, int& uSize)
 {
-	return nullptr;
+	if (!m_pShaderMgr) {
+		uSize = 0;
+		return nullptr;
+	}
+	iRS_Shader** pShaders = nullptr;
+	uSize = m_pShaderMgr->CreateShadersFromMemory(pMemory, (unsigned int)strlen(pMemory),pShaders);
+	return pShaders;
 }
 
 iRS_Window * RS_RendererDX11::CreateWindowFromHandle(HWND hwnd)

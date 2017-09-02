@@ -52,9 +52,6 @@
     </ClInclude>
     <ClInclude Include="engine_public.h" />
     <ClInclude Include="color.h" />
-    <ClInclude Include="rs_mesh_public.h">
-      <Filter>render_system</Filter>
-    </ClInclude>
     <ClInclude Include="scene_public.h" />
     <ClInclude Include="sceneobject_public.h" />
     <ClInclude Include="rs_rendertarget_public.h">
@@ -117,6 +114,9 @@
     <ClInclude Include="rs_material_dx11.h">
       <Filter>render_system\dx11</Filter>
     </ClInclude>
+    <ClInclude Include="rs_shader_manager.h">
+      <Filter>render_system\dx11</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="rs_renderer_dx11.cpp">
@@ -153,6 +153,9 @@
       <Filter>render_system\dx11</Filter>
     </ClCompile>
     <ClCompile Include="rs_shader_dx11.cpp">
+      <Filter>render_system\dx11</Filter>
+    </ClCompile>
+    <ClCompile Include="rs_shader_manager.cpp">
       <Filter>render_system\dx11</Filter>
     </ClCompile>
   </ItemGroup>

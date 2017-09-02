@@ -23,8 +23,8 @@ public:
 	virtual iRS_Texture*	CreateTexture2DFromeFile(LPCSTR pFilePath) = 0;
 	virtual iRS_Buffer*		CreateVertBuffer(eRS_BufferType bufferType,int size, void* data = nullptr) = 0;
 	virtual iRS_Buffer*		CreateIndexBuffer(int size, void* data) = 0;
-	virtual iRS_Shader*		CreateVShaderFromFile(LPCSTR pFilePath) = 0;
-	virtual iRS_Shader*		CreateVShaderFromMemory(byte* pMemory) = 0;
+	virtual iRS_Shader**	CreateShaderFromFile(LPCSTR pFilePath,int& uSize) = 0;
+	virtual iRS_Shader **	CreateShaderFromMemry(char * const pMemory, int & uSize) = 0;
 	virtual iRS_Window*		CreateWindowFromHandle(HWND hwnd) = 0;
 	virtual void			DestoryWindow(iRS_Window* pWnd) = 0;
 	virtual HRESULT			SetRenderTarget(iRS_RenderTarget* pRT) = 0;

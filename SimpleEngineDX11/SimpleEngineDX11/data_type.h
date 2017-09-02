@@ -48,6 +48,9 @@ typedef LPCSTR  LPCSTR;
 typedef byte	byte;
 typedef HRESULT HRESULT;
 
+typedef UINT16 UINT16;
+typedef UINT32 UINT32;
+
 #endif
 
 #endif
