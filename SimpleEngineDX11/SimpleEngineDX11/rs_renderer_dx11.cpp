@@ -5,6 +5,8 @@
 #include "rs_window_dx11.h"
 #include "rs_rendertarget_dx11.h"
 #include "rs_shader_manager.h"
+#include "rs_meshrenderer_dx11.h"
+#include "rs_material_dx11.h"
 
 HRESULT RS_RendererDX11::Init()
 {
@@ -126,6 +128,8 @@ HRESULT RS_RendererDX11::SetRenderTarget(iRS_RenderTarget * pRT)
 	
 	m_pContext->OMSetRenderTargets( pDX11RT->GetRenderTargetViewSize(), pDX11RT->GetRenderTargetView(), pDX11RT->GetDepthStencilView());
 
+	m_pContext->RSSetViewports(1,&pDX11RT->GetViewPort());
+
 	return S_OK;
 }
 
@@ -146,6 +150,18 @@ void RS_RendererDX11::ClearRenderTarget(iRS_RenderTarget * pRT, const Color & co
 		unsigned clearFlags = D3D11_CLEAR_DEPTH| D3D11_CLEAR_STENCIL;
 		m_pContext->ClearDepthStencilView(pDSV, clearFlags,depth,0);
 	}
+}
+
+iRS_MeshRenderer * RS_RendererDX11::CreateMeshRenderer()
+{
+	iRS_MeshRenderer* pMeshRenderer = new RS_MeshRendererDX11(this);
+	return pMeshRenderer;
+}
+
+iRS_Material * RS_RendererDX11::CreateMaterial()
+{
+	iRS_Material* pMat = new RS_MaterialDX11();
+	return pMat;
 }
 
 RS_RendererDX11 * Cast2RendererDX11(iRS_Renderer * pRenderer)

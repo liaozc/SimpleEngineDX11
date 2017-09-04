@@ -8,7 +8,7 @@ class RS_RenderTargetDX11 :public iRS_RenderTarget
 {
 public:
 	RS_RenderTargetDX11();
-	RS_RenderTargetDX11(ID3D11RenderTargetView**, unsigned, ID3D11DepthStencilView*);
+	RS_RenderTargetDX11(ID3D11RenderTargetView**, unsigned, ID3D11DepthStencilView*, int width, int height);
 
 	virtual void UnInit();
 	
@@ -16,10 +16,14 @@ public:
 	unsigned GetRenderTargetViewSize() const { return m_nRTViewCount; }
 	ID3D11DepthStencilView* GetDepthStencilView() const { return m_pDepthStencilView; }
 	
+	D3D11_VIEWPORT GetViewPort() const { return m_viewport; }
+protected:
+	void setupViewPort(int width, int height);
 protected:
 	ID3D11RenderTargetView** m_pRenderTargetViews;
 	unsigned m_nRTViewCount;
 	ID3D11DepthStencilView* m_pDepthStencilView;
+	D3D11_VIEWPORT m_viewport;
 };
 
 #endif

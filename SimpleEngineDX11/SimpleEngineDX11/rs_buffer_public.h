@@ -3,10 +3,11 @@
 
 enum eRS_BufferType
 {
-	eRS_BufferType_Vertex,
-	eRS_BufferType_Index,
-	eRS_BufferType_Constant,
-	eRS_BufferType_Count,
+	eRS_BT_None,
+	eRS_BT_Vertex,
+	eRS_BT_Index,
+	eRS_BT_Constant,
+	eRS_BT_Count,
 };
 
 class iRS_Buffer
@@ -16,6 +17,7 @@ public:
 	virtual void* Map2Memory(int& width,int& height) = 0;
 	virtual void  Map2GPU() = 0;
 	virtual HRESULT  Create(int dataSize, void* data) = 0;
+	virtual void UnInit() = 0;
 };
 
 #endif

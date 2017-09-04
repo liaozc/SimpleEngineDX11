@@ -1,7 +1,7 @@
 #include "rs_shader_dx11.h"
 #include "rs_renderer_dx11.h"
 #include <d3dcompiler.h>
-
+#include <d3d11shader.h>
 
 RS_ShaderDX11::RS_ShaderDX11(RS_RendererDX11* pRenderer)
 {
@@ -9,6 +9,7 @@ RS_ShaderDX11::RS_ShaderDX11(RS_RendererDX11* pRenderer)
 	m_pVShader = nullptr;
 	m_pInputSignature = nullptr;
 	m_pConstants = nullptr;
+	m_nConstantSize = 0;
 	m_eType = eRS_STNone;
 }
 
@@ -33,6 +34,9 @@ HRESULT RS_ShaderDX11::CompilerFromMemory(const char* pSource, unsigned uSize, e
 #ifdef _DEBUG
 	complierFlag |= D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION;
 #endif 
+
+	ID3D11ShaderReflection * pVSRefl= NULL;
+
 	ID3DBlob* pShaderBuff = nullptr;
 	ID3DBlob* pError = nullptr;
 	bool success = false;
@@ -40,6 +44,7 @@ HRESULT RS_ShaderDX11::CompilerFromMemory(const char* pSource, unsigned uSize, e
 		if (type == eRS_VertShader) {
 			if (SUCCEEDED(pDevice->CreateVertexShader(pShaderBuff->GetBufferPointer(), pShaderBuff->GetBufferSize(), NULL, &m_pVShader))) {
 				if (SUCCEEDED(D3DGetInputSignatureBlob(pShaderBuff->GetBufferPointer(), pShaderBuff->GetBufferSize(), &m_pInputSignature))) {
+					D3DReflect(pShaderBuff->GetBufferPointer(), pShaderBuff->GetBufferSize(), IID_ID3D11ShaderReflection, (void**)&pVSRefl);
 					success = true;
 				}
 			}
@@ -61,9 +66,23 @@ HRESULT RS_ShaderDX11::CompilerFromMemory(const char* pSource, unsigned uSize, e
 		}
 	}
 	else  if(pError) {
-		printf("error complier :%s \n",pError->GetBufferPointer());
+		printf("error complier :%s \n",(char*)pError->GetBufferPointer());
 	}
 
+	if (pVSRefl) {//gain some info from shader
+		//constant buffer
+		D3D11_SHADER_DESC descShader;
+		pVSRefl->GetDesc(&descShader);
+		m_nConstantSize = descShader.ConstantBuffers;
+		if (m_nConstantSize != 0) {
+			m_pConstants = new RS_ConstantBufferDX11*[m_nConstantSize];
+			for (int i = 0; i < m_nConstantSize; ++i) {
+				m_pConstants[i] = new RS_ConstantBufferDX11(m_pRenderer);
+				m_pConstants[i]->CreateFromShader(pVSRefl->GetConstantBufferByIndex(i));
+			}
+		}
+	}
+	
 	if (pShaderBuff) {
 		pShaderBuff->Release();
 		pShaderBuff = nullptr;
@@ -72,8 +91,46 @@ HRESULT RS_ShaderDX11::CompilerFromMemory(const char* pSource, unsigned uSize, e
 		pError->Release();
 		pError = nullptr;
 	}
+
+
+
 	if (success) m_eType = type;
 	return success ? S_OK : E_FAIL;
+}
+
+void RS_ShaderDX11::SetConstant1f(LPCSTR szName, float fVal)
+{
+	for (int i = 0; i < m_nConstantSize; ++i) {
+		if (m_pConstants[i]->SetValue(szName, &fVal, sizeof(fVal))) break;
+	}
+}
+
+void RS_ShaderDX11::SetConstant2f(LPCSTR szName, const Vector2 & v2Val)
+{
+	for (int i = 0; i < m_nConstantSize; ++i) {
+		if (m_pConstants[i]->SetValue(szName, (void*)&v2Val, sizeof(v2Val))) break;
+	}
+}
+
+void RS_ShaderDX11::SetConstant3f(LPCSTR szName, const Vector3 & v3Val)
+{
+	for (int i = 0; i < m_nConstantSize; ++i) {
+		if (m_pConstants[i]->SetValue(szName, (void*)&v3Val, sizeof(v3Val))) break;
+	}
+}
+
+void RS_ShaderDX11::SetConstant4f(LPCSTR szName, const Vector4 & v4Val)
+{
+	for (int i = 0; i < m_nConstantSize; ++i) {
+		if (m_pConstants[i]->SetValue(szName, (void*)&v4Val, sizeof(v4Val))) break;
+	}
+}
+
+void RS_ShaderDX11::SetConstant4x4f(LPCSTR szName, const Matrix & m4Val)
+{
+	for (int i = 0; i < m_nConstantSize; ++i) {
+		if (m_pConstants[i]->SetValue(szName, (void*)&m4Val, sizeof(m4Val))) break;
+	}
 }
 
 HRESULT RS_ShaderDX11::DoShade()
@@ -82,10 +139,22 @@ HRESULT RS_ShaderDX11::DoShade()
 	ID3D11DeviceContext* pContext = m_pRenderer->GetContext();
 	if (!pContext) return E_FAIL;
 	if (m_eType == eRS_VertShader) {
-		pContext->VSSetShader(m_pVShader, nullptr, 0);
-		return S_OK;
+		pContext->VSSetShader(m_pVShader, 0, 0);
 	}
-	return E_FAIL;
+	else if (m_eType == eRS_GeometryShader) {
+		pContext->GSSetShader(m_pGShader, 0, 0);
+	}
+	else if (m_eType == eRS_FragmentShader) {
+		pContext->PSSetShader(m_pPShader, 0, 0);
+	}
+	else if (m_eType == eRS_ComputeShader) {
+		pContext->CSSetShader(m_pCShader, 0, 0);
+	}
+	//apply constant
+	for (int i = 0; i < m_nConstantSize; ++i)
+		m_pConstants[i]->Apply();
+
+	return S_OK;
 }
 
 void RS_ShaderDX11::UnInit()
@@ -107,6 +176,14 @@ void RS_ShaderDX11::UnInit()
 		m_pInputSignature->Release();
 		m_pInputSignature = nullptr;
 	}
+	if (m_pConstants) {
+		for (int i = 0; i < m_nConstantSize; ++i) {
+			m_pConstants[i]->UnInit();
+			delete m_pConstants[i];
+		}
+		delete[] m_pConstants;
+	}
+	
 	
 
 		

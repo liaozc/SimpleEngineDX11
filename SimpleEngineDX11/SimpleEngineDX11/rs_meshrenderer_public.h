@@ -11,10 +11,11 @@ class iRS_MeshRenderer
 public:	
 	virtual void SetMesh(Mesh* mesh) = 0;
 	virtual Mesh* GetMesh() const = 0;
-	virtual iRS_Material* GetMaterai() const = 0;
+	virtual iRS_Material* GetMaterial() const = 0;
+	virtual void SetMaterial(iRS_Material* pMat) = 0;
 	virtual iRS_Buffer* GetVertBuffer() const = 0;
 	virtual iRS_Buffer* GetIndexBuffer() const = 0;
-	virtual void DoRender(iRS_Renderer* pRenderer) = 0;
+	virtual void DoRender() = 0;
 };
 
 #endif

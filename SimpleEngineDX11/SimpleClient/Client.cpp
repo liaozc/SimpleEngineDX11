@@ -1,6 +1,8 @@
 
 #include "engine_public.h"
 #include "rs_renderer_public.h"
+#include "geo_mesh.h"
+#include "mth_math.h"
 
 bool bIsRunning = true;
 iEngine* g_pEngine = nullptr;
@@ -129,9 +131,22 @@ int main()
 	iRS_RenderTarget* pMainRT = g_pWnd->GetRenderTarget();
 	pRenderer->SetRenderTarget(pMainRT);
 
-	LPCSTR tsVShader = "E:\\SimpleEngineDX11\\SimpleEngineDX11\\x64\\Debug\\ShaderTest.shd";
+	LPCSTR tsShader = "E:\\SimpleEngineDX11\\SimpleEngineDX11\\x64\\Debug\\ShaderTest.shd";
 	int uSize = 0;
-	iRS_Shader** pShaders = pRenderer->CreateShaderFromFile(tsVShader, uSize);
+	iRS_Shader** pShaders = pRenderer->CreateShaderFromFile(tsShader, uSize);
+	Matrix m;
+	pShaders[0]->SetConstant4x4f("worldViewProj",m);
+	
+	Vector3 pMeshVertex[] = { Vector3(0,0,0),Vector3(0,1,0),Vector3(1,0,0) };
+	UINT16 pMeshIndice[] = { 0,1,2};
+	eRS_VertDataFormat pMeshFormat[] = {eRS_VertDataFormat_Position};
+	iGEO_Manager* pGeoMgr = g_pEngine->GetGeometryManager();
+	Mesh* pMesh = pGeoMgr->CreateMesh(pMeshVertex, 3, sizeof(Vector3), pMeshIndice, 3, sizeof(UINT16), pMeshFormat, 1);
+	iRS_MeshRenderer* pMeshRenderer = pRenderer->CreateMeshRenderer();
+	iRS_Material* pMat = pRenderer->CreateMaterial();
+	pMat->SetShader(pShaders, uSize);
+	pMeshRenderer->SetMaterial(pMat);
+	pMeshRenderer->SetMesh(pMesh);
 
 	while (bIsRunning){
 		MSG msg;
@@ -142,6 +157,9 @@ int main()
 			DispatchMessage(&msg);
 		}
 		pRenderer->ClearRenderTarget(g_pWnd->GetRenderTarget());
+
+		pMeshRenderer->DoRender();
+
 		/*
 		[
 			iMesh pMesh = new Mesh();

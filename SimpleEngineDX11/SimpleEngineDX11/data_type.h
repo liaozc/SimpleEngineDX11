@@ -6,7 +6,7 @@ enum eRS_VertDataFormat
 	eRS_VertDataFormat_Position,
 	eRS_VertDataFormat_Normal,
 	eRS_VertDataFormat_Color,
-	eRS_VertDataFormat_Texturecoord,
+	eRS_VertDataFormat_TextureCoord,
 	eRS_VertDataFormat_Count,
 };
 

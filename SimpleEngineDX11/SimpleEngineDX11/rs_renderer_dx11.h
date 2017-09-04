@@ -4,6 +4,7 @@
 #include <d3d11.h>
 #include "rs_renderer_public.h"
 class RS_ShaderManagerDX11;
+class iRS_MeshRenderer;
 
 class RS_RendererDX11 : public iRS_Renderer
 {
@@ -22,6 +23,8 @@ public:
 	virtual void			DestoryWindow(iRS_Window* pWnd);
 	virtual HRESULT			SetRenderTarget(iRS_RenderTarget* pRT);
 	virtual void			ClearRenderTarget(iRS_RenderTarget* pRT, const Color& color = COLOR_BLUE, float depth = 1.0f);
+	virtual iRS_MeshRenderer* CreateMeshRenderer();
+	virtual iRS_Material* CreateMaterial();
 public:
 	ID3D11Device*			GetDevice() const { return m_pDevice; }
 	ID3D11DeviceContext*	GetContext() const { return m_pContext; }

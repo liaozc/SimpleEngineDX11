@@ -3,6 +3,7 @@
   <ItemGroup>
     <None Include="..\..\README.md" />
     <None Include="..\..\TODO.md" />
+    <None Include="SimpleEngine.def" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="render_system">
@@ -33,9 +34,6 @@
       <Filter>render_system</Filter>
     </ClInclude>
     <ClInclude Include="rs_renderer_dx11.h">
-      <Filter>render_system\dx11</Filter>
-    </ClInclude>
-    <ClInclude Include="rs_buffer_dx11.h">
       <Filter>render_system\dx11</Filter>
     </ClInclude>
     <ClInclude Include="rs_texture_dx11.h">
@@ -117,12 +115,21 @@
     <ClInclude Include="rs_shader_manager.h">
       <Filter>render_system\dx11</Filter>
     </ClInclude>
+    <ClInclude Include="rs_buffer_dx11.h">
+      <Filter>render_system\dx11</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_meshrenderer_dx11.h">
+      <Filter>render_system\dx11</Filter>
+    </ClInclude>
+    <ClInclude Include="geo_manager.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="geo_manager_public.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="rs_renderer_dx11.cpp">
-      <Filter>render_system\dx11</Filter>
-    </ClCompile>
-    <ClCompile Include="rs_buffer_dx11.cpp">
       <Filter>render_system\dx11</Filter>
     </ClCompile>
     <ClCompile Include="rs_window_dx11.cpp">
@@ -157,6 +164,15 @@
     </ClCompile>
     <ClCompile Include="rs_shader_manager.cpp">
       <Filter>render_system\dx11</Filter>
+    </ClCompile>
+    <ClCompile Include="rs_buffer_dx11.cpp">
+      <Filter>render_system\dx11</Filter>
+    </ClCompile>
+    <ClCompile Include="rs_meshrenderer_dx11.cpp">
+      <Filter>render_system\dx11</Filter>
+    </ClCompile>
+    <ClCompile Include="geo_manager.cpp">
+      <Filter>geometry</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

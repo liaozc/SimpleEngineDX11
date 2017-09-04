@@ -162,6 +162,6 @@ HRESULT RS_WindowDX11::createRT()
 	}
 	ID3D11RenderTargetView** pRTVAry = new ID3D11RenderTargetView*[1];
 	pRTVAry[0] = pRTV;
-	m_pRT = new RS_RenderTargetDX11(pRTVAry, 1, pDSV);
+	m_pRT = new RS_RenderTargetDX11(pRTVAry, 1, pDSV, m_nWidth,m_nHeight);
 	return S_OK;
 }

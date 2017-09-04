@@ -1,10 +1,10 @@
 #include "engine.h"
 #include "rs_renderer_dx11.h"
-
+#include "geo_manager.h"
 
 static iEngine* g_pEngine = nullptr;
 
-extern "C"
+extern "C" DLL_API
 iEngine* CreateEngine(const t_EngineConfigOptMap& option)
 {
 	if (!g_pEngine) {
@@ -17,6 +17,7 @@ iEngine* CreateEngine(const t_EngineConfigOptMap& option)
 	return g_pEngine;
 }
 
+extern "C" DLL_API
 void DestructEngine()
 {
 	if (g_pEngine) {
@@ -43,6 +44,7 @@ HRESULT Engine::Init(const t_EngineConfigOptMap & option)
 		if (opt_renderer != "dx11")  break;
 		m_pRenderer = new RS_RendererDX11();
 		if (FAILED(m_pRenderer->Init())) break;
+		m_pGeoMger = new GeometryManager();
 
 		hRet = S_OK;
 	
@@ -65,5 +67,10 @@ void Engine::UnInit()
 iRS_Renderer * Engine::GetRenderer() const
 {
 	return m_pRenderer;
+}
+
+iGEO_Manager * Engine::GetGeometryManager() const
+{
+	return m_pGeoMger;
 }
 

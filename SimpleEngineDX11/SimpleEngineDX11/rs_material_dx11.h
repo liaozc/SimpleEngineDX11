@@ -15,7 +15,10 @@ public:
 	virtual void SetDepthState(iRS_DepthState* depthState) { m_pDepthState = depthState; }
 	virtual void SetRasterizerState(iRS_RasterizerState* rasterizerState) { m_pRasterizerState = rasterizerState; }
 	virtual iRS_Shader* GetShader(eRS_ShaderType  shaderType) const ;
+	virtual void SetShader(iRS_Shader** pShaders, int size);
 	virtual HRESULT Apply(iRS_Renderer* pRenderer);
+protected:
+	void SetShader(iRS_Shader * pShader);
 protected:
 	iRS_BlendState* m_pBlendState;
 	iRS_DepthState* m_pDepthState;

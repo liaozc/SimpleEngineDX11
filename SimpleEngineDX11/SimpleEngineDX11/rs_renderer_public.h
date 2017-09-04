@@ -8,6 +8,8 @@
 #include "rs_shader_public.h"
 #include "rs_window_public.h"
 #include "rs_rendertarget_public.h"
+#include "rs_meshrenderer_public.h"
+#include "rs_material_public.h"
 #include "color.h"
 #include "data_type.h"
 
@@ -29,6 +31,9 @@ public:
 	virtual void			DestoryWindow(iRS_Window* pWnd) = 0;
 	virtual HRESULT			SetRenderTarget(iRS_RenderTarget* pRT) = 0;
 	virtual void			ClearRenderTarget(iRS_RenderTarget* pRT,const Color& color = COLOR_RED,float depth = 1.0f) = 0;
+	virtual iRS_MeshRenderer* CreateMeshRenderer() = 0;
+	virtual iRS_Material* CreateMaterial() = 0;
+
 }; 
 
 #endif

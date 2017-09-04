@@ -21,13 +21,16 @@
   <ItemGroup>
     <None Include="..\..\README.md" />
     <None Include="..\..\TODO.md" />
+    <None Include="SimpleEngine.def" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine.cpp" />
     <ClCompile Include="engine.h" />
+    <ClCompile Include="geo_manager.cpp" />
     <ClCompile Include="geo_mesh.cpp" />
     <ClCompile Include="rs_buffer_dx11.cpp" />
     <ClCompile Include="rs_material_dx11.cpp" />
+    <ClCompile Include="rs_meshrenderer_dx11.cpp" />
     <ClCompile Include="rs_renderer_dx11.cpp" />
     <ClCompile Include="rs_rendertarget_dx11.cpp" />
     <ClCompile Include="rs_shader_dx11.cpp" />
@@ -43,6 +46,8 @@
     <ClInclude Include="color.h" />
     <ClInclude Include="data_type.h" />
     <ClInclude Include="engine_public.h" />
+    <ClInclude Include="geo_manager.h" />
+    <ClInclude Include="geo_manager_public.h" />
     <ClInclude Include="geo_mesh.h" />
     <ClInclude Include="mth_math.h" />
     <ClInclude Include="mth_matrix.h" />
@@ -51,6 +56,7 @@
     <ClInclude Include="platform.h" />
     <ClInclude Include="rs_material_dx11.h" />
     <ClInclude Include="rs_material_public.h" />
+    <ClInclude Include="rs_meshrenderer_dx11.h" />
     <ClInclude Include="rs_meshrenderer_public.h" />
     <ClInclude Include="rs_renderer_dx11.h" />
     <ClInclude Include="rs_rendertarget_dx11.h" />
@@ -154,6 +160,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>SimpleEngine.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -167,7 +174,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>dxgi.lib;d3d11.lib;d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dxgi.lib;d3d11.lib;d3dcompiler.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>SimpleEngine.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -185,6 +193,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>SimpleEngine.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -202,6 +211,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>SimpleEngine.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

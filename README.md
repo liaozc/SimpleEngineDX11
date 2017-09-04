@@ -16,3 +16,7 @@ For Practicing On DX11
 	
 2017/8/30
 	创建渲染场景，加入简单的渲染单元。
+
+2017/9/4
+	数学库基本，shader constant buffer 控制基本，摄像头基本。mesh基本。 摄像头 + mesh + shader constant 实现基本绘制。
+	--carmack 上身吧，做的好慢。
