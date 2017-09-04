@@ -36,7 +36,7 @@ HRESULT RS_ShaderDX11::CompilerFromMemory(const char* pSource, unsigned uSize, e
 #endif 
 
 	ID3D11ShaderReflection * pVSRefl= NULL;
-
+	ID3D11ShaderReflection * pFSRefl = NULL;
 	ID3DBlob* pShaderBuff = nullptr;
 	ID3DBlob* pError = nullptr;
 	bool success = false;
@@ -56,6 +56,7 @@ HRESULT RS_ShaderDX11::CompilerFromMemory(const char* pSource, unsigned uSize, e
 		}
 		else if (type == eRS_FragmentShader) {
 			if (SUCCEEDED(pDevice->CreatePixelShader(pShaderBuff->GetBufferPointer(), pShaderBuff->GetBufferSize(), NULL, &m_pPShader))) {
+				D3DReflect(pShaderBuff->GetBufferPointer(), pShaderBuff->GetBufferSize(), IID_ID3D11ShaderReflection, (void**)&pFSRefl);
 				success = true;
 			}
 		}
@@ -82,7 +83,18 @@ HRESULT RS_ShaderDX11::CompilerFromMemory(const char* pSource, unsigned uSize, e
 			}
 		}
 	}
-	
+	if (pFSRefl) {
+		D3D11_SHADER_DESC descShader;
+		pFSRefl->GetDesc(&descShader);
+		m_nConstantSize = descShader.ConstantBuffers;
+		if (m_nConstantSize != 0) {
+			m_pConstants = new RS_ConstantBufferDX11*[m_nConstantSize];
+			for (int i = 0; i < m_nConstantSize; ++i) {
+				m_pConstants[i] = new RS_ConstantBufferDX11(m_pRenderer);
+				m_pConstants[i]->CreateFromShader(pFSRefl->GetConstantBufferByIndex(i));
+			}
+		}
+	}
 	if (pShaderBuff) {
 		pShaderBuff->Release();
 		pShaderBuff = nullptr;
@@ -140,12 +152,26 @@ HRESULT RS_ShaderDX11::DoShade()
 	if (!pContext) return E_FAIL;
 	if (m_eType == eRS_VertShader) {
 		pContext->VSSetShader(m_pVShader, 0, 0);
+		if (m_nConstantSize) {
+			ID3D11Buffer** pConstantBuffer = new ID3D11Buffer*[m_nConstantSize];
+			for (int i = 0; i < m_nConstantSize; ++i) {
+				pConstantBuffer[i] = m_pConstants[i]->GetGPUBuffer();
+			}
+			pContext->VSSetConstantBuffers(0, m_nConstantSize, pConstantBuffer);
+		}
 	}
 	else if (m_eType == eRS_GeometryShader) {
 		pContext->GSSetShader(m_pGShader, 0, 0);
 	}
 	else if (m_eType == eRS_FragmentShader) {
 		pContext->PSSetShader(m_pPShader, 0, 0);
+		if (m_nConstantSize) {
+			ID3D11Buffer** pConstantBuffer = new ID3D11Buffer*[m_nConstantSize];
+			for (int i = 0; i < m_nConstantSize; ++i) {
+				pConstantBuffer[i] = m_pConstants[i]->GetGPUBuffer();
+			}
+			pContext->PSSetConstantBuffers(0, m_nConstantSize, pConstantBuffer);
+		}
 	}
 	else if (m_eType == eRS_ComputeShader) {
 		pContext->CSSetShader(m_pCShader, 0, 0);

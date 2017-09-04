@@ -135,8 +135,11 @@ int main()
 	int uSize = 0;
 	iRS_Shader** pShaders = pRenderer->CreateShaderFromFile(tsShader, uSize);
 	Matrix m;
+	m.m00 = m.m11 = m.m22 = 0.5f;
+	m.m33 = 1.0f;
 	pShaders[0]->SetConstant4x4f("worldViewProj",m);
-	
+	pShaders[1]->SetConstant3f("testColr", Vector3(0, 0, 1));
+
 	Vector3 pMeshVertex[] = { Vector3(0,0,0),Vector3(0,1,0),Vector3(1,0,0) };
 	UINT16 pMeshIndice[] = { 0,1,2};
 	eRS_VertDataFormat pMeshFormat[] = {eRS_VertDataFormat_Position};
@@ -147,7 +150,8 @@ int main()
 	pMat->SetShader(pShaders, uSize);
 	pMeshRenderer->SetMaterial(pMat);
 	pMeshRenderer->SetMesh(pMesh);
-
+	float scale = 1.0;
+	bool bInOrder = true;
 	while (bIsRunning){
 		MSG msg;
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)){
@@ -156,8 +160,21 @@ int main()
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-		pRenderer->ClearRenderTarget(g_pWnd->GetRenderTarget());
+		pRenderer->ClearRenderTarget(g_pWnd->GetRenderTarget(),Color(0.5f,0.5f,0.5f,0.5f));
 
+		if (bInOrder) {
+			scale -= 0.01f;
+			if (scale <= 0.5f)
+				bInOrder = false;
+		}
+		else {
+			scale += 0.01f;
+			if (scale >= 1.0f)
+				bInOrder = true;
+		}
+		m.m00 = m.m11 = m.m22 = scale;
+		pShaders[0]->SetConstant4x4f("worldViewProj", m);
+		
 		pMeshRenderer->DoRender();
 
 		/*

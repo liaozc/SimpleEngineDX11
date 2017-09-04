@@ -56,16 +56,17 @@ HRESULT RS_BufferDX11::Create(int dataSize, void * data)
 	descBuffer.MiscFlags = 0;
 	descBuffer.StructureByteStride = 0;
 	descBuffer.BindFlags = getFlag();
-	descBuffer.CPUAccessFlags = m_bStatic ? 0 :D3D11_CPU_ACCESS_WRITE;
-	descBuffer.Usage = m_bStatic ? D3D11_USAGE_IMMUTABLE : D3D11_USAGE_DYNAMIC;
+	descBuffer.CPUAccessFlags = 0;
+	descBuffer.Usage = D3D11_USAGE_DEFAULT;
 	D3D11_SUBRESOURCE_DATA subResData;
 	subResData.pSysMem = data;
 	subResData.SysMemPitch = 0;
 	subResData.SysMemSlicePitch = 0;
 	if (FAILED(pD3DDevice->CreateBuffer(&descBuffer, data ? &subResData : 0, &m_pBuffer))) {
-		printf("can't create buffer");
+		printf("can't create buffer\n");
 		return E_FAIL;
 	}
+	m_nSize = dataSize;
 	return S_OK;
 }
 
