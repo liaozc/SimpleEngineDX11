@@ -5,7 +5,15 @@ RS_BlendStateDX11::RS_BlendStateDX11()
 {
 	m_sBlendConfig.src = eRS_One;
 	m_sBlendConfig.dst = eRS_Zero;
+	m_pBlendState = nullptr;
 	m_bDirty = true;
+}
+
+RS_BlendStateDX11::~RS_BlendStateDX11()
+{
+	if (m_pBlendState)
+		m_pBlendState->Release();
+	m_pBlendState = nullptr;
 }
 
 HRESULT RS_BlendStateDX11::DoState(iRS_Renderer * pRenderer)

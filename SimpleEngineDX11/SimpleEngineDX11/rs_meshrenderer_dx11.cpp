@@ -10,6 +10,18 @@ RS_MeshRendererDX11::RS_MeshRendererDX11(RS_RendererDX11 * pRenderer)
 	m_pMesh = nullptr;
 	m_pMaterial = nullptr;
 	m_pInputLayout = nullptr;
+	//SAFE_ADDREF(pRenderer);
+}
+
+RS_MeshRendererDX11::~RS_MeshRendererDX11()
+{
+	SAFE_RELEASE(m_pVertBuffer);
+	SAFE_RELEASE(m_pIndexBuffer);
+	SAFE_RELEASE(m_pMaterial);
+	SAFE_RELEASE(m_pInputLayout);
+	SAFE_DELETE(m_pMesh);
+//	SAFE_RELEASE(m_pRenderer);
+
 }
 
 void RS_MeshRendererDX11::SetMesh(Mesh * mesh)
@@ -21,7 +33,9 @@ void RS_MeshRendererDX11::SetMesh(Mesh * mesh)
 
 void RS_MeshRendererDX11::SetMaterial(iRS_Material * pMat)
 {
+	SAFE_RELEASE(m_pMaterial);
 	m_pMaterial = dynamic_cast<RS_MaterialDX11*>(pMat);
+	SAFE_ADDREF(m_pMaterial);
 }
 
 void RS_MeshRendererDX11::DoRender()
@@ -44,14 +58,9 @@ void RS_MeshRendererDX11::DoRender()
 void RS_MeshRendererDX11::updateMesh()
 {
 	//clear buffer first
-	if (m_pVertBuffer)
-		m_pVertBuffer->UnInit();
-	if (m_pIndexBuffer)
-		m_pIndexBuffer->UnInit();
-	if (m_pInputLayout) {
-		m_pInputLayout->Release();
-		m_pInputLayout = nullptr;
-	}
+	SAFE_RELEASE(m_pVertBuffer);
+	SAFE_RELEASE(m_pIndexBuffer);
+	SAFE_RELEASE(m_pInputLayout);
 	if (!m_pVertBuffer) m_pVertBuffer = new RS_VertBufferDX11(m_pRenderer);
 	if (!m_pIndexBuffer) m_pIndexBuffer = new RS_IndexBufferDX11(m_pRenderer);
 	if (m_pMesh) {

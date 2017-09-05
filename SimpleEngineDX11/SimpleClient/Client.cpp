@@ -139,7 +139,7 @@ int main()
 	m.m33 = 1.0f;
 	pShaders[0]->SetConstant4x4f("worldViewProj",m);
 	pShaders[1]->SetConstant3f("testColr", Vector3(0, 0, 1));
-
+	iRS_Shader* pShader0 = pShaders[0];
 	Vector3 pMeshVertex[] = { Vector3(0,0,0),Vector3(0,1,0),Vector3(1,0,0) };
 	UINT16 pMeshIndice[] = { 0,1,2};
 	eRS_VertDataFormat pMeshFormat[] = {eRS_VertDataFormat_Position};
@@ -150,6 +150,12 @@ int main()
 	pMat->SetShader(pShaders, uSize);
 	pMeshRenderer->SetMaterial(pMat);
 	pMeshRenderer->SetMesh(pMesh);
+	
+	for (int i = 0; i < uSize; ++i) SAFE_RELEASE(pShaders[i]);
+	SAFE_DELETE_ARRAY(pShaders);
+	SAFE_RELEASE(pMat); //所有get回来的东西都不用release，但是所有Create回来的都需要释放
+
+
 	float scale = 1.0;
 	bool bInOrder = true;
 	while (bIsRunning){
@@ -173,7 +179,7 @@ int main()
 				bInOrder = true;
 		}
 		m.m00 = m.m11 = m.m22 = scale;
-		pShaders[0]->SetConstant4x4f("worldViewProj", m);
+		pShader0->SetConstant4x4f("worldViewProj", m);
 		
 		pMeshRenderer->DoRender();
 
@@ -211,10 +217,11 @@ int main()
 		*/
 
 		g_pWnd->Present();
-		Sleep(5);
+		Sleep(30);
 	}
 	printf("quitting...\n");
-	pRenderer->DestoryWindow(g_pWnd);
+	pMeshRenderer->Release();
+	g_pWnd->Release();
 	pfnDestruct();
 	return 1;
 }

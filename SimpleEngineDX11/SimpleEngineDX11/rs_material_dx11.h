@@ -8,17 +8,19 @@ class RS_MaterialDX11 : public iRS_Material
 {
 public:
 	RS_MaterialDX11();
+	virtual ~RS_MaterialDX11();
 	virtual iRS_BlendState* GetBlendState() const { return m_pBlendState; }
 	virtual iRS_DepthState* GetDepthState() const { return m_pDepthState; }
 	virtual iRS_RasterizerState* GetRasterizerState() const { return m_pRasterizerState; }
-	virtual void SetBlendState(iRS_BlendState* blendState) { m_pBlendState = blendState; }
-	virtual void SetDepthState(iRS_DepthState* depthState) { m_pDepthState = depthState; }
-	virtual void SetRasterizerState(iRS_RasterizerState* rasterizerState) { m_pRasterizerState = rasterizerState; }
+	virtual void SetBlendState(iRS_BlendState* blendState);
+	virtual void SetDepthState(iRS_DepthState* depthState);
+	virtual void SetRasterizerState(iRS_RasterizerState* rasterizerState);
 	virtual iRS_Shader* GetShader(eRS_ShaderType  shaderType) const ;
 	virtual void SetShader(iRS_Shader** pShaders, int size);
 	virtual HRESULT Apply(iRS_Renderer* pRenderer);
 protected:
-	void SetShader(iRS_Shader * pShader);
+	void setShader(iRS_Shader * pShader);
+	virtual void unInit();
 protected:
 	iRS_BlendState* m_pBlendState;
 	iRS_DepthState* m_pDepthState;

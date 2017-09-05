@@ -14,6 +14,13 @@ RS_SampleState::RS_SampleState()
 	m_pSamplerState = nullptr;
 }
 
+RS_SampleState::~RS_SampleState()
+{
+	if (m_pSamplerState)
+		m_pSamplerState->Release();
+	m_pSamplerState = nullptr;
+}
+
 void RS_SampleState::SetFilter(eRS_Filter filter)
 {
 	if (m_eFilter == filter) return;

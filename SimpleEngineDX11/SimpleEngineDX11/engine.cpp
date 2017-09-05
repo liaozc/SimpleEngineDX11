@@ -58,10 +58,8 @@ HRESULT Engine::Init(const t_EngineConfigOptMap & option)
 
 void Engine::UnInit()
 {
-	if (m_pRenderer) {
-		m_pRenderer->UnInit();
-		delete m_pRenderer;
-	}
+	SAFE_RELEASE(m_pRenderer);
+	delete m_pGeoMger;
 }
 
 iRS_Renderer * Engine::GetRenderer() const

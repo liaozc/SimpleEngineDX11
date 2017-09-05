@@ -17,6 +17,13 @@ RS_DepthStateDX11::RS_DepthStateDX11()
 	m_pDepthState = nullptr;
 }
 
+RS_DepthStateDX11::~RS_DepthStateDX11()
+{
+	if (m_pDepthState)
+		m_pDepthState->Release();
+	m_pDepthState = nullptr;
+}
+
 
 void RS_DepthStateDX11::SetDepthTest(bool enable)
 {

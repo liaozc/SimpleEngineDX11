@@ -8,6 +8,7 @@ class RS_DepthStateDX11 : public iRS_DepthState
 {
 public:
 	RS_DepthStateDX11();
+	virtual ~RS_DepthStateDX11();
 	virtual void SetDepthTest(bool enable);
 	virtual bool GetDepthTest() const { return m_bDepthTest; }
 	virtual void SetStencilTest(bool enable);
@@ -46,6 +47,7 @@ protected:
 	eRS_DepthStencilOperation m_eDSOP_DepthFail;
 	bool m_bDirty;
 	ID3D11DepthStencilState* m_pDepthState;
+	
 };
 
 

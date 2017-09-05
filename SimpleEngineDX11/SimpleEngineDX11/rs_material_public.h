@@ -1,6 +1,7 @@
 #ifndef RS_MATERIAL_PUBLIC_H
 #define RS_MATERIAL_PUBLIC_H
 
+#include "ref_public.h"
 //todo: 目前的材质就是一堆状态设置，Shader组成
 #include "rs_state_blend_public.h"
 #include "rs_state_depth_public.h"
@@ -10,7 +11,7 @@
 
 class iRS_Renderer;
 
-class iRS_Material
+class iRS_Material : public iRef
 {
 public:
 	virtual iRS_BlendState* GetBlendState() const = 0;
@@ -22,6 +23,8 @@ public:
 	virtual iRS_Shader* GetShader(eRS_ShaderType  shaderType) const = 0;
 	virtual void SetShader(iRS_Shader** pShaders,int size) = 0;
 	virtual HRESULT Apply(iRS_Renderer* pRenderer) = 0;
+
+	virtual ~iRS_Material() {}
 };
 
 

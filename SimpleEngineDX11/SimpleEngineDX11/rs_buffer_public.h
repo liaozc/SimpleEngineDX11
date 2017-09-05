@@ -1,6 +1,8 @@
 #ifndef RS_BUFFER_PUBLIC_H
 #define RS_BUFFER_PUBLIC_H
 
+#include "ref_public.h"
+
 enum eRS_BufferType
 {
 	eRS_BT_None,
@@ -10,14 +12,12 @@ enum eRS_BufferType
 	eRS_BT_Count,
 };
 
-class iRS_Buffer
+class iRS_Buffer : public iRef
 {
 public:
 	virtual eRS_BufferType GetType() const = 0;
-	virtual void* Map2Memory(int& width,int& height) = 0;
-	virtual void  Map2GPU() = 0;
 	virtual HRESULT  Create(int dataSize, void* data) = 0;
-	virtual void UnInit() = 0;
+	virtual ~iRS_Buffer() {}
 };
 
 #endif

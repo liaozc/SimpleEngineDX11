@@ -21,4 +21,8 @@ typedef unsigned __int64 uint64;
 #define DLL_API _declspec(dllimport)
 #endif
 
+#include <assert.h>
+
+#define Assert  assert 
+
 #endif

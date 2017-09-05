@@ -8,6 +8,7 @@ class RS_RasterizerStateDX11 :public iRS_RasterizerState
 {
 public:
 	RS_RasterizerStateDX11();
+	virtual ~RS_RasterizerStateDX11();
 	virtual eRS_CullType GetCullType() const { return m_eCullType; }
 	virtual void SetCullType(eRS_CullType cullType);
 	virtual void SetFillMode(eRS_FillMode fillMode);

@@ -34,6 +34,7 @@ public:
 	virtual float GetDepthBais() const = 0;
 	virtual void SetSlopeDepthBais(float slopeDepthBais) = 0;
 	virtual float GetSlopeDepthBais() const = 0;
+	virtual ~iRS_RasterizerState() {}
 };
 
 #endif

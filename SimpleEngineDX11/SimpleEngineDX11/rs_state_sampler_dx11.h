@@ -8,6 +8,7 @@ class RS_SampleState : public iRS_SamplerState
 {
 public:
 	RS_SampleState();
+	virtual ~RS_SampleState();
 	virtual void SetFilter(eRS_Filter filter);
 	virtual eRS_Filter GetFilter() const { return m_eFilter; }
 	virtual void SetAddressMode(eRS_AddressMode u, eRS_AddressMode v, eRS_AddressMode w);

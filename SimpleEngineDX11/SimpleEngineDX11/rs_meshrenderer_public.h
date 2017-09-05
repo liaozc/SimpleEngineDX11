@@ -1,14 +1,17 @@
 #ifndef RS_MESHRENDERER_PUBLIC_H
 #define RS_MESHRENDERER_PUBLIC_H 
 
+#include "ref_public.h"
+
 class Mesh;
 class iRS_Material;
 class iRS_Buffer;
 class iRS_Renderer;
 
-class iRS_MeshRenderer
+class iRS_MeshRenderer : public iRef
 {
 public:	
+	virtual ~iRS_MeshRenderer() {}
 	virtual void SetMesh(Mesh* mesh) = 0;
 	virtual Mesh* GetMesh() const = 0;
 	virtual iRS_Material* GetMaterial() const = 0;

@@ -33,6 +33,7 @@ public:
 	virtual void SetMipLodBais(float lod) = 0;
 	virtual void SetMaxAniso(float aniso) = 0;
 	virtual void SetCompareFunc(eRS_ComparisonFunction compareFun) = 0;
+	virtual ~iRS_SamplerState() {}
 };
 
 #endif

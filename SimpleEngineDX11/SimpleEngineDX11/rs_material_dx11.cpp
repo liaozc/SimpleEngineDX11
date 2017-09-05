@@ -15,6 +15,11 @@ RS_MaterialDX11::RS_MaterialDX11()
 	m_pRasterizerState->SetCullType(eRS_CullNone);
 }	
 
+RS_MaterialDX11::~RS_MaterialDX11()
+{
+	unInit();
+}
+
 iRS_Shader * RS_MaterialDX11::GetShader(eRS_ShaderType shaderType) const
 {
 	iRS_Shader* pRet = nullptr;
@@ -36,27 +41,60 @@ iRS_Shader * RS_MaterialDX11::GetShader(eRS_ShaderType shaderType) const
 	return pRet;
 }
 
+
+void RS_MaterialDX11::SetBlendState(iRS_BlendState* blendState)
+{
+	SAFE_RELEASE(m_pBlendState);
+	m_pBlendState = blendState;
+	SAFE_ADDREF(m_pBlendState);
+}
+
+void RS_MaterialDX11::SetDepthState(iRS_DepthState* depthState)
+{
+	SAFE_RELEASE(m_pDepthState);
+	m_pDepthState = depthState;
+	SAFE_ADDREF(m_pDepthState);
+}
+
+void RS_MaterialDX11::SetRasterizerState(iRS_RasterizerState* rasterizerState)
+{
+	SAFE_RELEASE(m_pRasterizerState);
+	m_pRasterizerState = rasterizerState;
+	SAFE_ADDREF(m_pRasterizerState);
+}
+
 void RS_MaterialDX11::SetShader(iRS_Shader ** pShaders, int size)
 {
 	for (int i = 0; i < size; ++i) {
-		SetShader(pShaders[i]);
+		setShader(pShaders[i]);
 	}
 }
 
-void RS_MaterialDX11::SetShader(iRS_Shader * pShader)
+void RS_MaterialDX11::setShader(iRS_Shader * pShader)
 {
-	if (pShader->GetType() == eRS_VertShader)
+	if (pShader->GetType() == eRS_VertShader) {
+		SAFE_RELEASE(m_pVShader);
 		m_pVShader = pShader;
+		m_pVShader->AddRef();
+	}
 
-	if (pShader->GetType() == eRS_GeometryShader)
+	if (pShader->GetType() == eRS_GeometryShader) {
+		SAFE_RELEASE(m_pGShader)
 		m_pGShader = pShader;
+		m_pVShader->AddRef();
+	}
 
-	if (pShader->GetType() == eRS_FragmentShader)
+	if (pShader->GetType() == eRS_FragmentShader) {
+		SAFE_RELEASE(m_pFShader)
 		m_pFShader = pShader;
+		m_pFShader->AddRef();
+	}
 
-	if (pShader->GetType() == eRS_ComputeShader)
+	if (pShader->GetType() == eRS_ComputeShader) {
+		SAFE_RELEASE(m_pCShader)
 		m_pCShader = pShader;
-	
+		m_pCShader->AddRef();
+	}
 }
 
 HRESULT RS_MaterialDX11::Apply(iRS_Renderer * pRenderer)
@@ -81,4 +119,13 @@ HRESULT RS_MaterialDX11::Apply(iRS_Renderer * pRenderer)
 	return S_OK;
 }
 
-
+void RS_MaterialDX11::unInit()
+{
+	SAFE_RELEASE(m_pVShader);
+	SAFE_RELEASE(m_pGShader);
+	SAFE_RELEASE(m_pFShader);
+	SAFE_RELEASE(m_pCShader);
+	SAFE_RELEASE(m_pDepthState);
+	SAFE_RELEASE(m_pRasterizerState);
+	SAFE_RELEASE(m_pBlendState);
+}

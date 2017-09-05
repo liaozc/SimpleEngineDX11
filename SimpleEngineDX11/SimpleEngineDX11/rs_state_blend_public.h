@@ -36,6 +36,7 @@ public:
 	virtual BlendCongfig GetBlendConfig() const = 0;
 	virtual void SetBlendConfig(const BlendCongfig& config) = 0;
 	virtual void SetBlendState(eRS_BlendOption src, eRS_BlendOption dst) = 0;
+	virtual ~iRS_BlendState() {}
 };
 
 #endif

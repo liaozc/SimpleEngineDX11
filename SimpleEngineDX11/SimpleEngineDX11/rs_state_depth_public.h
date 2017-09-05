@@ -41,6 +41,7 @@ public:
 	virtual eRS_DepthStencilOperation GetStencilFail() const = 0;
 	virtual eRS_DepthStencilOperation GetStencilPass() const = 0;
 	virtual eRS_DepthStencilOperation GetDepthlFail() const = 0;
+	virtual ~iRS_DepthState() {}
 };
 
 #endif

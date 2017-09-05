@@ -1,8 +1,9 @@
 #include "rs_shader_manager.h"
-
+#include "rs_renderer_dx11.h"
 RS_ShaderManagerDX11::RS_ShaderManagerDX11(RS_RendererDX11 * pRenderer)
 {
 	m_pRenderer = pRenderer;
+	//SAFE_ADDREF(m_pRenderer);
 }
 
 HRESULT RS_ShaderManagerDX11::CreateShadersFromFile(const char * pFilePath, iRS_Shader **& pShaders, int & nSize, bool bManagered)
@@ -85,45 +86,45 @@ int RS_ShaderManagerDX11::CreateShadersFromMemory(char * const pSource, unsigned
 		*pCS = '\0';
 		pCS += header_lens[3];
 	}
-	int headerOffset = strlen(pHeader);
+	size_t headerOffset = strlen(pHeader);
 	char * const pDest = new char[uSize];
 	memcpy(pDest, pHeader, headerOffset);
 	if (pVS) {
-		int contentOffset = strlen(pVS);
+		size_t contentOffset = strlen(pVS);
 		memcpy(pDest + headerOffset, pVS, contentOffset);
 		pDest[headerOffset + contentOffset] = '\0';
 		pShaders[index] = new RS_ShaderDX11(m_pRenderer);
-		if (FAILED(pShaders[index]->CompilerFromMemory(pDest, contentOffset + headerOffset, eRS_VertShader))) {
+		if (FAILED(pShaders[index]->CompilerFromMemory(pDest, (unsigned int)(contentOffset + headerOffset), eRS_VertShader))) {
 			bFail = true;
 		}
 		index++;
 	}
 	if (pGS && !bFail) {
-		int contentOffset = strlen(pGS);
+		size_t contentOffset = strlen(pGS);
 		memcpy(pDest + headerOffset, pGS, contentOffset);
 		pDest[headerOffset + contentOffset] = '\0';
 		pShaders[index] = new RS_ShaderDX11(m_pRenderer);
-		if (FAILED(pShaders[index]->CompilerFromMemory(pDest, headerOffset + contentOffset, eRS_GeometryShader))) {
+		if (FAILED(pShaders[index]->CompilerFromMemory(pDest, (unsigned int)(headerOffset + contentOffset), eRS_GeometryShader))) {
 			bFail = true;
 		}
 		index++;
 	}
 	if (pFS && !bFail) {
-		int contentOffset = strlen(pFS);
+		size_t contentOffset = strlen(pFS);
 		memcpy(pDest + headerOffset, pFS, contentOffset);
 		pDest[headerOffset + contentOffset] = '\0';
 		pShaders[index] = new RS_ShaderDX11(m_pRenderer);
-		if (FAILED(pShaders[index]->CompilerFromMemory(pDest, headerOffset + contentOffset, eRS_FragmentShader))) {
+		if (FAILED(pShaders[index]->CompilerFromMemory(pDest, (unsigned int)(headerOffset + contentOffset), eRS_FragmentShader))) {
 			bFail = true;
 		}
 		index++;
 	}
 	if (pCS && !bFail) {
-		int contentOffset = strlen(pCS);
+		size_t contentOffset = strlen(pCS);
 		memcpy(pDest + headerOffset, pCS, contentOffset);
 		pDest[headerOffset + contentOffset] = '\0';
 		pShaders[index] = new RS_ShaderDX11(m_pRenderer);
-		if (FAILED(pShaders[index]->CompilerFromMemory(pDest, headerOffset + contentOffset, eRS_ComputeShader))) {
+		if (FAILED(pShaders[index]->CompilerFromMemory(pDest, (unsigned int)(headerOffset + contentOffset), eRS_ComputeShader))) {
 			bFail = true;
 		}
 		index++;
@@ -141,7 +142,10 @@ int RS_ShaderManagerDX11::CreateShadersFromMemory(char * const pSource, unsigned
 	}
 	if (bManagered && pShaders) {
 		for (int i = 0; i < shaderSize; ++i) {
-			if (pShaders[i]) m_vShaders.push_back(pShaders[i]);
+			if (pShaders[i]) {
+				pShaders[i]->AddRef();
+				m_vShaders.push_back(pShaders[i]);
+			}
 		}
 	}
 	return shaderSize;
@@ -151,12 +155,10 @@ int RS_ShaderManagerDX11::UnInit()
 {
 	size_t uSize = m_vShaders.size();
 	for (size_t i = 0; i < uSize; ++i) {
-		if (m_vShaders[i]) {
-			m_vShaders[i]->UnInit();
-			delete m_vShaders[i];
-			m_vShaders[i] = nullptr;
-		}
+		SAFE_RELEASE(m_vShaders[i]);
 	}
+	m_vShaders.clear();
+//	SAFE_RELEASE(m_pRenderer);
 	return 0;
 }
 

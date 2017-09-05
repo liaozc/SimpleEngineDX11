@@ -8,6 +8,29 @@
 #include "rs_meshrenderer_dx11.h"
 #include "rs_material_dx11.h"
 
+
+RS_RendererDX11::~RS_RendererDX11()
+{
+
+	if (m_pShaderMgr) {
+		m_pShaderMgr->UnInit();
+		delete m_pShaderMgr;
+		m_pShaderMgr = nullptr;
+	}
+	if (m_pContext) m_pContext->ClearState();
+	SAFE_RELEASE(m_pContext);
+#if 0
+	ID3D11Debug *d3dDebug;
+	HRESULT hr = m_pDevice->QueryInterface(__uuidof(ID3D11Debug), reinterpret_cast<void**>(&d3dDebug));
+	if (SUCCEEDED(hr)) {
+		hr = d3dDebug->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
+		d3dDebug->Release();
+	}
+#endif
+	SAFE_RELEASE(m_pDevice);
+
+}
+
 HRESULT RS_RendererDX11::Init()
 {
 	m_pDevice = nullptr;
@@ -32,27 +55,6 @@ HRESULT RS_RendererDX11::Init()
 
 }
 
-void RS_RendererDX11::UnInit()
-{
-
-	if (m_pContext) {
-		m_pContext->ClearState();
-		m_pContext->Release();
-		m_pContext = nullptr;
-	}
-
-	if (m_pDevice) {
-		m_pDevice->Release();
-		m_pDevice = nullptr;
-	}
-
-	if (m_pShaderMgr) {
-		m_pShaderMgr->UnInit();
-		delete m_pShaderMgr;
-		m_pShaderMgr = nullptr;
-	}
-
-}
 
 iRS_Texture * RS_RendererDX11::CreateTexture2D(int width, int height, eRS_ResourceFormat format, void * data)
 {
@@ -103,17 +105,10 @@ iRS_Window * RS_RendererDX11::CreateWindowFromHandle(HWND hwnd)
 	RS_WindowDX11 * pWnd = new RS_WindowDX11();
 	if (FAILED(pWnd->Init(hwnd,this))) {
 		printf("error -> CreateWindowFromHandle \n");
-		delete pWnd;
+		pWnd->Release();
 		pWnd = nullptr;
 	}
 	return pWnd;
-}
-
-void RS_RendererDX11::DestoryWindow(iRS_Window * pWnd)
-{
-	if (!pWnd) return;
-	pWnd->UnInit();
-	delete pWnd;
 }
 
 HRESULT RS_RendererDX11::SetRenderTarget(iRS_RenderTarget * pRT)
@@ -125,9 +120,8 @@ HRESULT RS_RendererDX11::SetRenderTarget(iRS_RenderTarget * pRT)
 	}
 	RS_RenderTargetDX11* pDX11RT = dynamic_cast<RS_RenderTargetDX11*>(pRT);
 	if (!pDX11RT) return E_FAIL;
-	
-	m_pContext->OMSetRenderTargets( pDX11RT->GetRenderTargetViewSize(), pDX11RT->GetRenderTargetView(), pDX11RT->GetDepthStencilView());
 
+	m_pContext->OMSetRenderTargets( pDX11RT->GetRenderTargetViewSize(), pDX11RT->GetRenderTargetView(), pDX11RT->GetDepthStencilView());
 	m_pContext->RSSetViewports(1,&pDX11RT->GetViewPort());
 
 	return S_OK;

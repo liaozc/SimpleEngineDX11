@@ -10,27 +10,29 @@ RS_RenderTargetDX11::RS_RenderTargetDX11():
 
 RS_RenderTargetDX11::RS_RenderTargetDX11(ID3D11RenderTargetView ** pRTs, unsigned nSize, ID3D11DepthStencilView * pDS,int width,int height)
 {
+	for (unsigned int i = 0; i < m_nRTViewCount; ++i) {
+		SAFE_RELEASE(m_pRenderTargetViews[i]);
+	}
+	SAFE_RELEASE(m_pDepthStencilView);
+	SAFE_DELETE_ARRAY(m_pRenderTargetViews);
+
 	m_pRenderTargetViews = pRTs;
 	m_nRTViewCount = nSize;
 	m_pDepthStencilView = pDS;
+	for (unsigned int i = 0; i < m_nRTViewCount; ++i) {
+		SAFE_ADDREF(m_pRenderTargetViews[i]);
+	}
+	SAFE_ADDREF(m_pDepthStencilView);
 	setupViewPort(width,height);
 }
 
-void RS_RenderTargetDX11::UnInit()
+RS_RenderTargetDX11::~RS_RenderTargetDX11()
 {
-	if (m_pRenderTargetViews && m_nRTViewCount != 0) {
-		for (unsigned i = 0; i < m_nRTViewCount; ++i) {
-			if (m_pRenderTargetViews[i])
-				m_pRenderTargetViews[i]->Release();
-		}
-		delete[]m_pRenderTargetViews;
-		m_pRenderTargetViews = nullptr;
-		m_nRTViewCount = 0;
+	for (unsigned i = 0; i < m_nRTViewCount; ++i) {
+		SAFE_RELEASE(m_pRenderTargetViews[i]);
 	}
-	if (m_pDepthStencilView) {
-		m_pDepthStencilView->Release();
-		m_pDepthStencilView = nullptr;
-	}
+	SAFE_RELEASE(m_pDepthStencilView);
+	SAFE_DELETE_ARRAY(m_pRenderTargetViews);
 }
 
 void RS_RenderTargetDX11::setupViewPort(int width, int height)

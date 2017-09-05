@@ -10,6 +10,7 @@ class RS_MeshRendererDX11 :public iRS_MeshRenderer
 {
 public:
 	RS_MeshRendererDX11(RS_RendererDX11* pRenderer);
+	virtual ~RS_MeshRendererDX11();
 	virtual void SetMesh(Mesh* mesh);
 	virtual Mesh* GetMesh() const { return m_pMesh; }
 	virtual iRS_Material* GetMaterial() const {	return m_pMaterial;}

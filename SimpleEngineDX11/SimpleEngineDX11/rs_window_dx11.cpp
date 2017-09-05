@@ -68,7 +68,7 @@ HRESULT RS_WindowDX11::Init(HWND hwnd, iRS_Renderer* pRenderer)
 	return createRT();
 }
 
-void RS_WindowDX11::UnInit()
+RS_WindowDX11::~RS_WindowDX11()
 {
 	if (m_pSwapChain) {
 		m_pSwapChain->Release();
@@ -80,10 +80,14 @@ void RS_WindowDX11::UnInit()
 		m_pDepthStencil = nullptr;
 	}
 	if (m_pRT) {
-		m_pRT->UnInit();
-		delete m_pRT;
+		m_pRT->Release();
 		m_pRT = nullptr;
 	}
+}
+
+iRS_RenderTarget* RS_WindowDX11::GetRenderTarget() const
+{
+	return m_pRT;
 }
 
 void RS_WindowDX11::OnSize(HWND hwnd, unsigned w, unsigned h)
@@ -91,17 +95,13 @@ void RS_WindowDX11::OnSize(HWND hwnd, unsigned w, unsigned h)
 	if (m_hwnd != hwnd || (w == m_nWidth && h == m_nHeight)) return;
 	m_nHeight = h;
 	m_nWidth = w;
-	if (m_pRT) {
-		m_pRT->UnInit();
-		delete m_pRT;
-	}
+	SAFE_RELEASE(m_pRT);
 	if (m_pDepthStencil) {
 		m_pDepthStencil->Release();
 		m_pDepthStencil = nullptr;
 	}
 	if (m_pSwapChain)
 		m_pSwapChain->ResizeBuffers(2, m_nWidth, m_nHeight, DXGI_FORMAT_R8G8B8A8_UNORM, 0);
-
 	createRT();
 }
 
@@ -163,5 +163,7 @@ HRESULT RS_WindowDX11::createRT()
 	ID3D11RenderTargetView** pRTVAry = new ID3D11RenderTargetView*[1];
 	pRTVAry[0] = pRTV;
 	m_pRT = new RS_RenderTargetDX11(pRTVAry, 1, pDSV, m_nWidth,m_nHeight);
+	pRTV->Release();
+	pDSV->Release();
 	return S_OK;
 }

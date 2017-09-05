@@ -3,7 +3,6 @@
   <ItemGroup>
     <None Include="..\..\README.md" />
     <None Include="..\..\TODO.md" />
-    <None Include="SimpleEngine.def" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="render_system">
@@ -127,6 +126,7 @@
     <ClInclude Include="geo_manager_public.h">
       <Filter>geometry</Filter>
     </ClInclude>
+    <ClInclude Include="ref_public.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="rs_renderer_dx11.cpp">

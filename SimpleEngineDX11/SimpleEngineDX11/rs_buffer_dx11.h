@@ -13,13 +13,14 @@ class RS_BufferDX11 : public iRS_Buffer
 {
 public:
 	RS_BufferDX11(RS_RendererDX11* pRenderer);
+	virtual ~RS_BufferDX11();
+
 	virtual eRS_BufferType GetType() const { return m_eType; }
-	virtual void* Map2Memory(int& width,int& height);
-	virtual void  Map2GPU();
 	virtual HRESULT  Create(int dataSize, void* data);
-	virtual void SetStatic(bool bStatic) { m_bStatic = bStatic; }
 	virtual ID3D11Buffer* GetGPUBuffer() const { return m_pBuffer; }
-	virtual void UnInit();
+
+protected:
+	virtual void unInit();
 protected:
 	D3D11_BIND_FLAG getFlag() const;
 protected:
@@ -65,10 +66,13 @@ class RS_ConstantBufferDX11 : public RS_BufferDX11
 {
 public:
 	RS_ConstantBufferDX11(RS_RendererDX11* pRenderer);
+	virtual ~RS_ConstantBufferDX11();
 	HRESULT CreateFromShader(ID3D11ShaderReflectionConstantBuffer* pRefl);
 	bool SetValue(LPCSTR name,void* data,short size);
 	void Apply();
-	virtual void UnInit();
+	
+protected:
+	virtual void unInit();
 protected:
 	byte*	m_pConstantMem;
 	t_ShaderConstantVarArray m_vConstants;

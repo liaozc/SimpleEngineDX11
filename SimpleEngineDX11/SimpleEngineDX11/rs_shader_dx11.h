@@ -15,6 +15,7 @@ class RS_ShaderDX11 : public iRS_Shader
 {
 public:
 	RS_ShaderDX11(RS_RendererDX11* pRenderer);
+	virtual ~RS_ShaderDX11();
 	virtual eRS_ShaderType GetType() const { return m_eType; }
 	virtual HRESULT CompilerFromMemory(const char* pSource, unsigned uSize, eRS_ShaderType type);
 	ID3DBlob* GetInputSignature() const { return m_pInputSignature; }
@@ -24,7 +25,8 @@ public:
 	virtual void SetConstant4f(LPCSTR szName, const Vector4& v4Val);
 	virtual void SetConstant4x4f(LPCSTR szName, const Matrix& m4Val);
 	virtual HRESULT DoShade();
-	virtual void UnInit();
+protected:
+	void bind_constant(ID3D11DeviceContext* pContext);
 protected:
 	eRS_ShaderType m_eType;
 	union {

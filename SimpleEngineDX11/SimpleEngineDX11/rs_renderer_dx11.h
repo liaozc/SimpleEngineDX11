@@ -9,8 +9,8 @@ class iRS_MeshRenderer;
 class RS_RendererDX11 : public iRS_Renderer
 {
 public:
+	virtual ~RS_RendererDX11();
 	virtual HRESULT Init();
-	virtual void	UnInit();
 
 public:
 	virtual iRS_Texture*	CreateTexture2D(int width, int height, eRS_ResourceFormat format, void* data);
@@ -20,7 +20,6 @@ public:
 	virtual iRS_Shader**	CreateShaderFromFile(LPCSTR pFilePath, int& uSize);
 	virtual iRS_Shader **	CreateShaderFromMemry(char * const pMemory, int & uSize);
 	virtual iRS_Window*		CreateWindowFromHandle(HWND hwnd);
-	virtual void			DestoryWindow(iRS_Window* pWnd);
 	virtual HRESULT			SetRenderTarget(iRS_RenderTarget* pRT);
 	virtual void			ClearRenderTarget(iRS_RenderTarget* pRT, const Color& color = COLOR_BLUE, float depth = 1.0f);
 	virtual iRS_MeshRenderer* CreateMeshRenderer();

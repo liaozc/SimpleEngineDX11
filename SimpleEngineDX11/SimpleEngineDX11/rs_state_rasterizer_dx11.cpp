@@ -13,6 +13,13 @@ RS_RasterizerStateDX11::RS_RasterizerStateDX11()
 	m_pRasterizerState = nullptr;
 }
 
+RS_RasterizerStateDX11::~RS_RasterizerStateDX11()
+{
+	if (m_pRasterizerState)
+		m_pRasterizerState->Release();
+	m_pRasterizerState = nullptr;
+}
+
 void RS_RasterizerStateDX11::SetCullType(eRS_CullType cullType)
 {
 	if (m_eCullType == cullType) return;

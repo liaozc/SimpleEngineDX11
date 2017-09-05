@@ -8,9 +8,9 @@
 class RS_WindowDX11 : public iRS_Window
 {
 public:
+	virtual ~RS_WindowDX11();
 	virtual HRESULT Init(HWND hwnd, iRS_Renderer* pRenderer);
-	virtual void	UnInit();
-	virtual iRS_RenderTarget* GetRenderTarget() const { return m_pRT; }
+	virtual iRS_RenderTarget* GetRenderTarget() const;
 	virtual void OnSize(HWND hwnd, unsigned w, unsigned h);
 	virtual void Present();
 protected:

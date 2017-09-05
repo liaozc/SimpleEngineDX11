@@ -9,8 +9,7 @@ class RS_RenderTargetDX11 :public iRS_RenderTarget
 public:
 	RS_RenderTargetDX11();
 	RS_RenderTargetDX11(ID3D11RenderTargetView**, unsigned, ID3D11DepthStencilView*, int width, int height);
-
-	virtual void UnInit();
+	virtual ~RS_RenderTargetDX11();
 	
 	ID3D11RenderTargetView** GetRenderTargetView() const { return m_pRenderTargetViews; }
 	unsigned GetRenderTargetViewSize() const { return m_nRTViewCount; }

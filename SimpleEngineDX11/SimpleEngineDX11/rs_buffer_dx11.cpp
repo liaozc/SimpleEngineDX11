@@ -8,34 +8,12 @@ RS_BufferDX11::RS_BufferDX11(RS_RendererDX11 * pRenderer)
 	m_pRenderer = pRenderer;
 	m_nSize = 0;
 	m_bStatic = false;
+	//SAFE_ADDREF(m_pRenderer);
 }
 
-void * RS_BufferDX11::Map2Memory(int& width, int& height)
+RS_BufferDX11::~RS_BufferDX11()
 {
-	width = height = 0;
-	if (!m_pBuffer || ! m_pRenderer) return nullptr;
-	RS_RendererDX11* pRendererDX11 = dynamic_cast<RS_RendererDX11*>(m_pRenderer);
-	if (!pRendererDX11) return nullptr;
-	ID3D11DeviceContext* pContext = pRendererDX11->GetContext();
-	if (!pContext) return nullptr;
-	D3D11_MAPPED_SUBRESOURCE dataMap;
-	if (FAILED(pContext->Map(m_pBuffer, 0, D3D11_MAP_WRITE, 0, &dataMap))) {
-		printf("can't map the buffer to memory\n");
-		return nullptr;
-	}
-	width = dataMap.RowPitch;
-	height = dataMap.DepthPitch;
-	return dataMap.pData;
-}
-
-void RS_BufferDX11::Map2GPU()
-{
-	if (!m_pBuffer || !m_pRenderer) return;
-	RS_RendererDX11* pRendererDX11 = dynamic_cast<RS_RendererDX11*>(m_pRenderer);
-	if (!pRendererDX11) return;
-	ID3D11DeviceContext* pContext = pRendererDX11->GetContext();
-	if (!pContext) return;
-	pContext->Unmap(m_pBuffer, 0);
+	unInit();
 }
 
 HRESULT RS_BufferDX11::Create(int dataSize, void * data)
@@ -47,10 +25,7 @@ HRESULT RS_BufferDX11::Create(int dataSize, void * data)
 	if (!pRendererDX11) return E_FAIL;
 	ID3D11Device* pD3DDevice = pRendererDX11->GetDevice();
 	if (!pD3DDevice) return E_FAIL;
-	if (m_pBuffer) {
-		m_pBuffer->Release();
-		m_pBuffer = nullptr;
-	}
+	SAFE_RELEASE(m_pBuffer);
 	D3D11_BUFFER_DESC descBuffer;
 	descBuffer.ByteWidth = dataSize;
 	descBuffer.MiscFlags = 0;
@@ -70,12 +45,13 @@ HRESULT RS_BufferDX11::Create(int dataSize, void * data)
 	return S_OK;
 }
 
-void RS_BufferDX11::UnInit()
+void RS_BufferDX11::unInit()
 {
-	if (m_pBuffer) {
-		m_pBuffer->Release();
-		m_pBuffer = nullptr;
-	}
+	m_eType = eRS_BT_None;
+	m_nSize = 0;
+	m_bStatic = false;
+	//SAFE_RELEASE(m_pRenderer);
+	SAFE_RELEASE(m_pBuffer);
 }
 
 D3D11_BIND_FLAG RS_BufferDX11::getFlag() const
@@ -111,6 +87,11 @@ RS_ConstantBufferDX11::RS_ConstantBufferDX11(RS_RendererDX11 * pRenderer)
 	m_eType = eRS_BT_Constant;
 	m_bDirty = true;
 	m_pConstantMem = nullptr;
+}
+
+RS_ConstantBufferDX11::~RS_ConstantBufferDX11()
+{
+	unInit();
 }
 
 HRESULT RS_ConstantBufferDX11::CreateFromShader(ID3D11ShaderReflectionConstantBuffer * pRefl)
@@ -158,16 +139,12 @@ void RS_ConstantBufferDX11::Apply()
 	m_bDirty = false;
 }
 
-void RS_ConstantBufferDX11::UnInit()
+void RS_ConstantBufferDX11::unInit()
 {
-	if (m_pBuffer) {
-		m_pBuffer->Release();
-		m_pBuffer = nullptr;
-	}
-	if (!m_pConstantMem) delete[] m_pConstantMem;
+	SAFE_DELETE_ARRAY(m_pConstantMem);
 	for (size_t i = 0; i < m_vConstants.size(); ++ i) {
 		m_vConstants[i].clear();
 	}
-
+	m_eType = eRS_BT_Constant;
 }
 

@@ -1,5 +1,0 @@
-
-extern "C"  {
-iEngine* CreateEngine(const t_EngineConfigOptMap& option);
-void DestructEngine();
-}
